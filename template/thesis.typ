@@ -1,40 +1,51 @@
-#import "@preview/modern-nju-thesis:0.3.4": documentclass, indent
+#import "@preview/modern-ecnu-thesis:0.3.4": documentclass, indent
 
-// 你首先应该安装 https://github.com/nju-lug/modern-nju-thesis/tree/main/fonts/FangZheng 里的所有字体，
-// 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」，导致显示错误。
+// 你首先应该安装 https://github.com/jtchen2k/modern-ecnu-thesis/tree/main/fonts/FangZheng 里的所有字体，
+// 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」。
 
 #let (
   // 布局函数
   twoside, doc, preface, mainmatter, mainmatter-end, appendix,
   // 页面函数
-  fonts-display-page, cover, decl-page, abstract, abstract-en, bilingual-bibliography,
+  fonts-display-page, cover, decl-page, committee, abstract, abstract-en, bilingual-bibliography,
   outline-page, list-of-figures, list-of-tables, notation, acknowledgement,
 ) = documentclass(
-  // doctype: "bachelor",  // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为本科生 bachelor
+  // doctype: "bachelor",  // "bachelor" | "master" | "doctor", 文档类型，默认为硕士生 master
+  doctype: "master",
   // degree: "academic",  // "academic" | "professional", 学位类型，默认为学术型 academic
+  degree: "professional",
   // anonymous: true,  // 盲审模式
-  twoside: true,  // 双面模式，会加入空白页，便于打印
+  twoside: false,  // 双面模式，会加入空白页，便于打印
   // 可自定义字体，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
   // fonts: (楷体: ("Times New Roman", "FZKai-Z03S")),
   info: (
-    title: ("基于 Typst 的", "南京大学学位论文"),
-    title-en: "My Title in English",
+    // title 与 department 均支持多行。可以使用 \n 分行或使用列表。
+    title: ("基于 Typst 的", "华东师范大学学位论文"),
+    title-en: "Typst Thesis Template for\nEast China Normal University",
     grade: "20XX",
-    student-id: "1234567890",
+    student-id: "31415926536",
     author: "张三",
     author-en: "Ming Xing",
-    department: "某学院",
-    department-en: "School of Chemistry and Chemical Engineering",
+    department: ("信息学部", "计算机科学与技术学院"),
+    department-en: "School of Computer Science and Technology\nFaculty of Information",
+    // 专业 / 专业学位类别
     major: "某专业",
-    major-en: "Chemistry",
+    major-en: "Computer Science",
+    // 研究方向 / 专业学位领域
+    field: "某方向",
+    field-en: "XX Field",
     supervisor: ("李四", "教授"),
-    supervisor-en: "Professor My Supervisor",
-    // supervisor-ii: ("王五", "副教授"),
-    // supervisor-ii-en: "Professor My Supervisor",
+    supervisor-en: ("Prof.", "Si Li"),
+    supervisor-ii: ("王五", "副教授"),
+    // supervisor-ii-en: ("Assoc. Prof.", "Wu Wang"),
     submit-date: datetime.today(),
+    // 密级与分类号，按照教务要求，可留白
+    secret-level: "",
+    clc: "",
   ),
   // 参考文献源
   bibliography: bibliography.with("ref.bib"),
+
 )
 
 // 文稿设置
@@ -44,47 +55,54 @@
 // #fonts-display-page()
 
 // 封面页
-#cover()
+#cover(
+  // 这里的可选参数可以用于调整封面各个字段每一行的长度
+  title-line-length: 320pt,
+  title-line-length-en: 300pt,
+  meta-info-line-length: 200pt,
+  meta-info-line-length-en: 230pt,
+)
 
 // 声明页
 #decl-page()
 
+// 答辩委员会页（仅研究生）
+#committee()
 
 // 前言
 #show: preface
 
 // 中文摘要
 #abstract(
-  keywords: ("我", "就是", "测试用", "关键词")
+  keywords: ("天行健", "君子以", "自强", "不息")
 )[
-  中文摘要
+  滚滚长江东逝水，浪花淘尽英雄。是非成败转头空。青山依旧在，几度夕阳红。白发渔樵江渚上，惯看秋月春风。一壶浊酒喜相逢。古今多少事，都付笑谈中。
 ]
 
 // 英文摘要
 #abstract-en(
-  keywords: ("Dummy", "Keywords", "Here", "It Is")
+  keywords: ("To", "be", "or", "not", "to", "be")
 )[
-  English abstract
+  #lorem(100)
 ]
 
-
-// 目录
-#outline-page()
+// 目录。preface 中的项目均可以通过可选的 outlined 属性控制是否在目录中显示
+#outline-page(outlined: false)
 
 // 插图目录
-// #list-of-figures()
+#list-of-figures()
 
 // 表格目录
-// #list-of-tables()
-
-// 正文
-#show: mainmatter
+#list-of-tables()
 
 // 符号表
-// #notation[
-//   / DFT: 密度泛函理论 (Density functional theory)
-//   / DMRG: 密度矩阵重正化群密度矩阵重正化群密度矩阵重正化群 (Density-Matrix Reformation-Group)
-// ]
+#notation[
+  / DFT: 密度泛函理论 (Density functional theory)
+  / DMRG: 密度矩阵重正化群密度矩阵重正化群密度矩阵重正化群 (Density-Matrix Reformation-Group)
+  / RAII: 资源获取即初始化 (Resource Acquisition Is Initialization)
+]
+// 正文
+#show: mainmatter
 
 = 导　论
 
@@ -111,7 +129,7 @@
 
 == 图表
 
-引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:nju-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
+引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:ecnu-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
 
 #align(center, (stack(dir: ltr)[
   #figure(
@@ -141,10 +159,9 @@
 ]))
 
 #figure(
-  image("images/nju-emblem.svg", width: 20%),
-  caption: [图片测试],
-) <nju-logo>
-
+  image("images/ecnu-emblem.svg", width: 20%),
+  caption: [这里是图片说明文字。This is the caption for the figure.],
+) <ecnu-logo>
 
 == 数学公式
 
@@ -166,7 +183,7 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 == 参考文献
 
-可以像这样引用参考文献：图书#[@蒋有绪1998]和会议#[@中国力学学会1990]。
+可以像这样引用参考文献：图书 #[@蒋有绪1998] 和会议 #[@中国力学学会1990].
 
 == 代码块
 
@@ -183,25 +200,26 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 = 正　文
 
+// 用于生成占位符。可删除。
+#import "@preview/kouhu:0.1.0": kouhu
+#kouhu(builtin-text: "zhufu", length: 1348)
+
 == 正文子标题
 
 === 正文子子标题
 
-正文内容
-
-
-// 手动分页
+// 手动分页示例
 #if twoside {
   pagebreak() + " "
 }
 
 // 中英双语参考文献
-// 默认使用 gb-7714-2015-numeric 样式
-#bilingual-bibliography(full: true)
+// 默认使用修改后的 gb-7714-2015-numeric-nosup.csl 样式（引用文字非上标格式）。该文件嵌入在模板内。如需使用上标格式，使用 Typst 自带的 gb-t-7714-2015-numeric 即可。
+#bilingual-bibliography(full: true, style: "./gb-t-7714-2015-numeric-nosup.csl")
 
 // 致谢
 #acknowledgement[
-  感谢 NJU-LUG，感谢 NJUThesis LaTeX 模板。
+  感谢 #link("https://github.com/nju-lug/modern-nju-thesis")[modern-nju-thesis] 模板。
 ]
 
 // 手动分页
@@ -209,9 +227,8 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
   pagebreak() + " "
 }
 
-
-// 附录
-#show: appendix
+// 附录。可选地，可以重置标题 counter
+#show: appendix.with(reset-counter: false)
 
 = 附录
 
@@ -222,11 +239,8 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 附录内容，这里也可以加入图片，例如@fig:appendix-img。
 
 #figure(
-  image("images/nju-emblem.svg", width: 20%),
+  image("images/ecnu-emblem.svg", width: 20%),
   caption: [图片测试],
 ) <appendix-img>
 
-
-// 正文结束标志，不可缺少
-// 这里放在附录后面，使得页码能正确计数
-#mainmatter-end()
+= 作者简历及在学期间所取得的科研成果

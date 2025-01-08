@@ -1,10 +1,14 @@
 #import "@preview/outrageous:0.1.0"
 #import "../utils/invisible-heading.typ": invisible-heading
 #import "../utils/style.typ": 字号, 字体
+#import "../utils/custom-heading.typ": heading-content
+#import "../utils/pagebreak-from-odd.typ": pagebreak-from-odd
 
 // 本科生目录生成
 #let bachelor-outline-page(
   // documentclass 传入参数
+  doctype: "master",
+  show-heading: false,
   twoside: false,
   fonts: (:),
   // 其他参数
@@ -41,7 +45,13 @@
   }
 
   // 2.  正式渲染
-  pagebreak(weak: true, to: if twoside { "odd" })
+  pagebreak-from-odd(twoside: twoside)
+
+  set page(..(if show-heading {(
+    header: {
+        heading-content(doctype: doctype, fonts: fonts)
+      }
+  )} else {()}))
 
   // 默认显示的字体
   set text(font: reference-font, size: reference-size)

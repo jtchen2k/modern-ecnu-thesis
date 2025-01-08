@@ -5,12 +5,12 @@
   // 其他参数
   fallback: false,  // 字体缺失时使用 fallback，不显示豆腐块
   lang: "zh",
-  margin: (x: 89pt),
+  margin: (top: 3cm, bottom: 2.5cm, left: 2.6cm, right: 2.6cm),
   it,
 ) = {
   // 1.  默认参数
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "华东师范大学学位论文"),
     author: "张三",
   ) + info
 
@@ -22,7 +22,7 @@
 
   // 3.  基本的样式设置
   set text(fallback: fallback, lang: lang)
-  set page(margin: margin)
+  set page(margin: margin, paper: "a4")
 
   // 4.  PDF 元信息
   set document(

@@ -91,7 +91,7 @@
         // 我想让上面这一行匹配变成非贪婪的，但加问号后没啥效果？
         let comma-in-itt = itt.text.replace(regex(",?\s?译"), "").matches(",")
         if (
-          type(comma-in-itt) == array and 
+          type(comma-in-itt) == array and
           comma-in-itt.len() >= (
               if allow-comma-in-name {2} else {1}
             )
@@ -136,6 +136,7 @@
   }
 
   set text(lang: "zh")
+
   bibliography(
     title: title,
     full: full,

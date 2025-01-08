@@ -1,13 +1,15 @@
-#import "@preview/anti-matter:0.0.2": anti-front-end
+#import "@preview/anti-matter:0.1.1": fence, step
 #import "@preview/i-figured:0.2.4"
 #import "../utils/style.typ": 字号, 字体
 #import "../utils/custom-numbering.typ": custom-numbering
-#import "../utils/custom-heading.typ": heading-display, active-heading, current-heading
+#import "../utils/custom-heading.typ": heading-display, active-heading, current-heading, heading-content
 #import "../utils/indent.typ": fake-par
 #import "../utils/unpairs.typ": unpairs
+#import "../utils/pagebreak-from-odd.typ": pagebreak-from-odd
 
 #let mainmatter(
   // documentclass 传入参数
+  doctype: "master",
   twoside: false,
   fonts: (:),
   // 其他参数
@@ -20,24 +22,23 @@
   text-args: auto,
   // 标题字体与字号
   heading-font: auto,
-  heading-size: (字号.四号,),
+  heading-size: (字号.三号, 字号.四号,),
   heading-weight: ("regular",),
   heading-above: (2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
-  heading-below: (2 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em),
+  heading-below: (2 * 15.6pt, 2 * 15.6pt - 0.7em),
   heading-pagebreak: (true, false),
   heading-align: (center, auto),
   // 页眉
   header-render: auto,
   header-vspace: 0em,
   display-header: false,
-  skip-on-first-level: true,
-  stroke-width: 0.5pt,
+  stroke-width: 0.75pt,
   reset-footnote: true,
   // caption 的 separator
   separator: "  ",
   // caption 样式
-  caption-style: strong,
-  caption-size: 字号.五号,
+  caption-style: text.with(font: 字体.楷体, style: "italic", size: 字号.小四),
+  caption-size: 字号.小四,
   // figure 计数
   show-figure: i-figured.show-figure,
   // equation 计数
@@ -45,8 +46,15 @@
   ..args,
   it,
 ) = {
+
   // 0.  标志前言结束
-  anti-front-end()
+  context {
+    // TODO: 用了一个很 tricky 的方式防止前言最后一页的页码打印出来，可能有更优解
+    set page(footer: { text(size: 0pt, ".") })
+    v(-1pt)
+    fence()
+  }
+
 
   // 1.  默认参数
   fonts = 字体 + fonts
@@ -88,12 +96,35 @@
   show figure.where(
     kind: table
   ): set figure.caption(position: top)
+  show figure.where(
+    kind: table
+  ): it => {
+    v(0.5em)
+    it
+    v(0.5em)
+  }
   set figure.caption(separator: separator)
   show figure.caption: caption-style
-  show figure.caption: set text(font: fonts.宋体, size: 字号.五号)
+  show figure.caption: set text(size: caption-size, font: fonts.楷体, style: "italic")
+  show figure.caption: set par(leading: 1.25em)
+  show figure.where(kind: image).or(
+    figure.where(kind: raw)
+  ): set block(inset: (top: 0.5em, bottom: 0.5em))
+  show figure.caption: c => [
+  #text(font: fonts.黑体, weight: "bold", style: "normal")[
+    #c.supplement #c.counter.display(c.numbering)
+  ]
+  #c.separator#c.body
+]
   // 3.6 优化列表显示
   //     术语列表 terms 不应该缩进
   show terms: set par(first-line-indent: 0pt)
+  // 3.7 处理链接样式
+  show link: it => {
+    set text(fill: color.rgb("#0000FF"))
+    it
+  }
+  set table(stroke: 0.5pt + black)
 
   // 4.  处理标题
   // 4.1 设置标题的 Numbering
@@ -130,35 +161,25 @@
     }
   }
 
+  // 重置 footnote 计数器
+  if reset-footnote {
+    counter(footnote).update(0)
+  }
+
   // 5.  处理页眉
   set page(..(if display-header {
     (
       header: {
-        // 重置 footnote 计数器
-        if reset-footnote {
-          counter(footnote).update(0)
-        }
+        // needed by anti-matter
         locate(loc => {
-          // 5.1 获取当前页面的一级标题
-          let cur-heading = current-heading(level: 1, loc)
-          // 5.2 如果当前页面没有一级标题，则渲染页眉
-          if not skip-on-first-level or cur-heading == none {
-            if header-render == auto {
-              // 一级标题和二级标题
-              let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 { heading-display(active-heading(level: 1, loc)) } else { "" }
-              let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 2 { heading-display(active-heading(level: 2, prev: false, loc)) } else { "" }
-              set text(font: fonts.楷体, size: 字号.五号)
-              stack(
-                first-level-heading + h(1fr) + second-level-heading,
-                v(0.25em),
-                if first-level-heading != "" or second-level-heading != "" { line(length: 100%, stroke: stroke-width + black) },
-              )
-            } else {
-              header-render(loc)
-            }
-            v(header-vspace)
+          if header-render == auto {
+            heading-content(doctype: doctype, fonts: fonts)
+          } else {
+            header-render(loc)
           }
         })
+        v(header-vspace)
+
       }
     )
   } else {
@@ -173,4 +194,9 @@
   }))
 
   it
+
+  // 正文结束标志，不可缺少
+  // 这里放在附录后面，使得页码能正确计数
+  fence()
+
 }

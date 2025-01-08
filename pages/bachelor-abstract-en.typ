@@ -59,7 +59,7 @@
 
       #v(1em)
 
-      #double-underline[#fakebold[南京大学本科生毕业论文（设计、作品）英文摘要]]
+      #double-underline[#fakebold[华东师范大学本科生毕业论文（设计、作品）英文摘要]]
     ]
 
     #v(2pt)

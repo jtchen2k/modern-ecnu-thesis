@@ -18,13 +18,34 @@
   小七: 5pt,
 )
 
+// 拼音
+#let zihao = (
+  chu: 字号.初号,
+  xchu: 字号.小初,
+  yi: 字号.一号,
+  xyi: 字号.小一,
+  er: 字号.二号,
+  xer: 字号.小二,
+  san: 字号.三号,
+  xsan: 字号.小三,
+  si: 字号.四号,
+  zsi: 字号.中四,
+  xsi: 字号.小四,
+  wu: 字号.五号,
+  xwu: 字号.小五,
+  liu: 字号.六号,
+  xliu: 字号.小六,
+  qi: 字号.七号,
+  xqi: 字号.小七,
+)
+
 #let 字体 = (
   // 宋体，属于「有衬线字体」，一般可以等同于英文中的 Serif Font
   // 这一行分别是「新罗马体（有衬线英文字体）」、「思源宋体（简体）」、「思源宋体」、「宋体（Windows）」、「宋体（MacOS）」
-  宋体: ("Times New Roman", "Source Han Serif SC", "Source Han Serif", "Noto Serif CJK SC", "SimSun", "Songti SC", "STSongti"),
+  宋体: ("Times New Roman", "STSongti", "Source Han Serif CN", "Source Han Serif", "Noto Serif CJK SC", "SimSun", "Songti SC", "STSongti"),
   // 黑体，属于「无衬线字体」，一般可以等同于英文中的 Sans Serif Font
   // 这一行分别是「Arial（无衬线英文字体）」、「思源黑体（简体）」、「思源黑体」、「黑体（Windows）」、「黑体（MacOS）」
-  黑体: ("Arial", "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "SimHei", "Heiti SC", "STHeiti"),
+  黑体: ("Helvetica", "Arial", "STHeiti", "Heiti SC", "SimHei", "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC"),
   // 楷体
   楷体: ("Times New Roman", "KaiTi", "Kaiti SC", "STKaiti", "FZKai-Z03S", "Noto Serif CJK SC"),
   // 仿宋
@@ -32,4 +53,12 @@
   // 等宽字体，用于代码块环境，一般可以等同于英文中的 Monospaced Font
   // 这一行分别是「Courier New（Windows 等宽英文字体）」、「思源等宽黑体（简体）」、「思源等宽黑体」、「黑体（Windows）」、「黑体（MacOS）」
   等宽: ("Courier New", "Menlo", "IBM Plex Mono", "Source Han Sans HW SC", "Source Han Sans HW", "Noto Sans Mono CJK SC", "SimHei", "Heiti SC", "STHeiti"),
+)
+
+#let fonts = (
+  song: 字体.宋体,
+  hei: 字体.黑体,
+  kai: 字体.楷体,
+  fang: 字体.仿宋,
+  mono: 字体.等宽,
 )

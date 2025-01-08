@@ -1,3 +1,5 @@
+#import "style.typ": 字号
+#import "@preview/anti-matter:0.1.1": step
 // 展示一个标题
 #let heading-display(it) = {
   if it != none {
@@ -47,4 +49,33 @@
   } else {
     return none
   }
+}
+
+// 页眉内容
+#let heading-content(
+  doctype: "master",
+  fonts: (:),
+  stroke-width: 0.75pt,
+) = {
+  locate(loc => {
+    // 获取当前页面的一级标题
+    let cur-heading = current-heading(level: 1, loc)
+    let first-level-heading = if cur-heading != none { heading-display(cur-heading) } else { heading-display(active-heading(level: 1, loc)) }
+    let docinfo = "华东师范大学" + if doctype == "master" { "硕士" } else { "博士" } + "学位论文"
+    // let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 { heading-display(active-heading(level: 1, loc)) } else { "" }
+    // let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 2 { heading-display(active-heading(level: 2, prev: false, loc)) } else { "" }
+    set text(font: fonts.宋体, size: 字号.五号)
+    stack(
+      if calc.rem(loc.page(), 2) == 1 {
+        // 奇数页，左侧一级标题，右侧文档信息
+        first-level-heading + h(1fr) + docinfo
+      } else {
+        docinfo + h(1fr) + first-level-heading
+      },
+      v(0.5em),
+      line(length: 100%, stroke: stroke-width + black)
+    )
+  })
+  step()
+
 }

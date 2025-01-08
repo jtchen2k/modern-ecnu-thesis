@@ -16,7 +16,7 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "华东师范大学学位论文"),
   ) + info
 
   // 2.  对参数进行处理
@@ -41,7 +41,7 @@
       font: fonts.黑体,
       size: 字号.小一,
       weight: "bold",
-      "南京大学本科毕业论文（设计）\n诚信承诺书",
+      "华东师范大学本科毕业论文（设计）\n诚信承诺书",
     ),
   )
 
@@ -61,7 +61,7 @@
     [],
     align(left)[
       #set text(font: fonts.黑体, size: 字号.小三)
-      
+
       作者签名：
 
       学号：

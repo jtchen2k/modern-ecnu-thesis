@@ -4,6 +4,8 @@
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/custom-tablex.typ": gridx, colspanx
 #import "../utils/invisible-heading.typ": invisible-heading
+#import "../utils/custom-heading.typ": heading-content
+#import "../utils/pagebreak-from-odd.typ": pagebreak-from-odd
 
 // 研究生英文摘要页
 #let master-abstract-en(
@@ -27,18 +29,17 @@
   column-gutter: 2pt,
   row-gutter: 10pt,
   anonymous-info-keys: ("author-en", "supervisor-en", "supervisor-ii-en"),
-  leading: 1.27em,
-  spacing: 1.27em,
+  leading: 1.5 * 15.6pt - 0.7em,
+  spacing: 2.5em,
   body,
 ) = {
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title-en: "NJU Thesis Template for Typst",
+    title-en: "ECNU Thesis Template for Typst",
     author-en: "Zhang San",
     department-en: "XX Department",
     major-en: "XX Major",
-    supervisor-en: "Professor Li Si",
   ) + info
 
   // 2.  对参数进行处理
@@ -47,92 +48,41 @@
     info.title-en = info.title-en.split("\n")
   }
 
-  // 3.  内置辅助函数
-  let info-key(body) = {
-    rect(
-      inset: info-inset,
-      stroke: none,
-      text(font: fonts.楷体, size: 字号.四号, body),
-    )
-  }
 
-  let info-value(key, body) = {
-    set align(info-value-align)
-    rect(
-      width: 100%,
-      inset: info-inset,
-      stroke: (bottom: stoke-width + black),
-      text(
-        font: fonts.楷体,
-        size: 字号.四号,
-        bottom-edge: "descender",
-        if (anonymous and (key in anonymous-info-keys)) {
-          "█████"
-        } else {
-          body
-        },
-      ),
-    )
-  }
+  pagebreak-from-odd(twoside: twoside)
 
-  // 4.  正式渲染
-  pagebreak(weak: true, to: if twoside { "odd" })
+  set page(
+    header: {
+      heading-content(doctype: doctype, fonts: fonts)
+    }
+  )
 
   [
-    #set text(font: fonts.楷体, size: 字号.四号)
     #set par(leading: leading, justify: true)
+
     #show par: set block(spacing: spacing)
+    #set block(spacing: spacing)
+
+    #set align(center)
+    #block[
+        #set text(font: fonts.黑体, size: 字号.小三, weight: "bold")
+        ABSTRACT
+    ]
 
     // 标记一个不可见的标题用于目录生成
     #invisible-heading(level: 1, outlined: outlined, outline-title)
 
-    #align(center)[
-      #set text(size: 字号.小二, weight: "bold")
+    #set align(left)
 
-      #v(8pt)
 
-      #double-underline((if not anonymous { "南京大学" }) + "研究生毕业论文英文摘要首页用纸")
 
-      #v(-5pt)
+    #set text(font: fonts.宋体, size: 字号.小四)
+
+    #body
+
+
+    #block[
+      *Keywords: *_#(("",) + keywords.intersperse(", ")).sum()_
     ]
-
-    #gridx(
-      columns: (56pt, auto, auto, 1fr),
-      inset: grid-inset,
-      column-gutter: column-gutter,
-      row-gutter: row-gutter,
-      info-key[#pin("title-en")THESIS:], colspanx(3, info-value("", " ")),
-      colspanx(4, info-value("", " ")),
-      colspanx(3, info-key[SPECIALIZATION:]), info-value("major-en", info.major-en),
-      colspanx(3, info-key[POSTGRADUATE:]), info-value("author-en", info.author-en),
-      colspanx(2, info-key[MENTOR:]), colspanx(2, info-value("supervisor-en", info.supervisor-en + if info.supervisor-ii-en != "" { h(1em) + info.supervisor-ii-en })),
-    )
-
-    // 用了很 hack 的方法来实现不规则表格长标题换行...
-    #pinit-place("title-en", {
-      set text(font: fonts.楷体, size: 字号.四号)
-      set par(leading: 1.3em)
-      h(58pt) + (("",)+ info.title-en).intersperse(" ").sum()
-    })
-
-    #v(3pt)
-
-    #align(center, text(font: fonts.黑体, size: 字号.小三, weight: abstract-title-weight, "ABSTRACT"))
-
-    #v(-5pt)
-
-    #set text(font: fonts.楷体, size: 字号.小四)
-
-    #[
-      #set par(first-line-indent: 2em)
-
-      #fake-par
-      
-      #body
-    ]
-
-    #v(10pt)
-
-    KEYWORDS: #(("",)+ keywords.intersperse("; ")).sum()
   ]
 }

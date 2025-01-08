@@ -23,7 +23,7 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "华东师范大学学位论文"),
     author: "张三",
     department: "某学院",
     major: "某专业",
@@ -59,7 +59,7 @@
 
       #v(1em)
 
-      #double-underline[#fakebold[南京大学本科生毕业论文（设计、作品）中文摘要]]
+      #double-underline[#fakebold[华东师范大学本科生毕业论文（设计、作品）中文摘要]]
     ]
 
     #fakebold[题目：]#info-value("title", (("",)+ info.title).sum())
@@ -78,7 +78,7 @@
       #set par(first-line-indent: 2em)
 
       #fake-par
-      
+
       #body
     ]
 
