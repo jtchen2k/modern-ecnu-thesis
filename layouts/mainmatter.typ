@@ -1,4 +1,4 @@
-#import "@preview/anti-matter:0.1.1": fence, step
+#import "@preview/anti-matter:0.1.1": fence, step, core
 #import "@preview/i-figured:0.2.4"
 #import "../utils/style.typ": 字号, 字体
 #import "../utils/custom-numbering.typ": custom-numbering
@@ -17,6 +17,9 @@
   spacing: 1.5 * 15.6pt - 0.7em,
   justify: true,
   first-line-indent: 2em,
+  // 浮动于页顶或页底的上下间距
+  figure-clearance: 32pt,
+  figure-caption-spacing: 0.4em,
   numbering: custom-numbering.with(first-level: "第一章 ", depth: 4, "1.1 "),
   // 正文字体与字号参数
   text-args: auto,
@@ -48,12 +51,28 @@
 ) = {
 
   // 0.  标志前言结束
-  context {
+  {
     // TODO: 用了一个很 tricky 的方式防止前言最后一页的页码打印出来，可能有更优解
     set page(footer: { text(size: 0pt, ".") })
     v(-1pt)
     fence()
   }
+
+  set page(footer: context {
+    set text(size: 字号.五号)
+    let p = core.inner-counter().get().at(0)
+    if doctype == "bachelor" {
+      align(center)[
+        #core.inner-counter().display()
+      ]
+    } else if calc.rem(p, 2) == 1 {
+      h(1fr)
+      text(core.inner-counter().display())
+    } else {
+      text(core.inner-counter().display())
+      h(1fr)
+    }
+  })
 
 
   // 1.  默认参数
@@ -83,8 +102,9 @@
     justify: justify,
     first-line-indent: first-line-indent
   )
-  show par: set block(spacing: spacing)
+  // show par: set block(spacing: spacing)
   show raw: set text(font: fonts.等宽)
+  show raw.where(block: true): set par(leading: 1em)
   // 3.2 脚注样式
   show footnote.entry: set text(font: fonts.宋体, size: 字号.五号)
   // 3.3 设置 figure 的编号
@@ -92,36 +112,40 @@
   show figure: show-figure
   // 3.4 设置 equation 的编号和假段落首行缩进
   show math.equation.where(block: true): show-equation
+  show math.equation.where(block: true): it => {
+    it
+    fake-par
+  }
   // 3.5 表格表头置顶 + 不用冒号用空格分割 + 样式
   show figure.where(
     kind: table
   ): set figure.caption(position: top)
-  show figure.where(
-    kind: table
-  ): it => {
-    v(0.5em)
-    it
-    v(0.5em)
-  }
   set figure.caption(separator: separator)
   show figure.caption: caption-style
-  show figure.caption: set text(size: caption-size, font: fonts.楷体, style: "italic")
+  show figure.caption: set text(size: caption-size, font: fonts.楷体)
   show figure.caption: set par(leading: 1.25em)
-  show figure.where(kind: image).or(
-    figure.where(kind: raw)
-  ): set block(inset: (top: 0.5em, bottom: 0.5em))
-  show figure.caption: c => [
-  #text(font: fonts.黑体, weight: "bold", style: "normal")[
-    #c.supplement #c.counter.display(c.numbering)
+  show figure.caption: c => block(inset: (top: figure-caption-spacing, bottom: figure-caption-spacing))[
+    #text(font: fonts.黑体, weight: "bold", style: "normal")[
+      #c.supplement #context c.counter.display(c.numbering)
+      ]
+      #c.separator#c.body
   ]
-  #c.separator#c.body
-]
-  // 3.6 优化列表显示
+  show figure.where(placement: none): it => {
+    v(figure-clearance / 6)
+    it
+    fake-par
+  }
+  set place(clearance: figure-clearance)
+   // 3.6 优化列表显示
   //     术语列表 terms 不应该缩进
   show terms: set par(first-line-indent: 0pt)
+  show terms.item: it => block[
+    #set par(hanging-indent: 2em)
+    #text(font: fonts.黑体)[#it.term] #h(0.5em) #it.description
+  ]
   // 3.7 处理链接样式
   show link: it => {
-    set text(fill: color.rgb("#0000FF"))
+    set text(fill: color.rgb("#0066CC"))
     it
   }
   set table(stroke: 0.5pt + black)
@@ -171,13 +195,11 @@
     (
       header: {
         // needed by anti-matter
-        locate(loc => {
-          if header-render == auto {
-            heading-content(doctype: doctype, fonts: fonts)
-          } else {
-            header-render(loc)
-          }
-        })
+        if header-render == auto {
+          heading-content(doctype: doctype, fonts: fonts)
+        } else {
+          header-render(loc)
+        }
         v(header-vspace)
 
       }
@@ -198,5 +220,4 @@
   // 正文结束标志，不可缺少
   // 这里放在附录后面，使得页码能正确计数
   fence()
-
 }

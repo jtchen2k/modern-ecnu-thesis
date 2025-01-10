@@ -1,7 +1,17 @@
-// 华东师范大学学位论文模板 modern-ecnu-thesis
-// Authors: OrangeX4, jtchen2k
-// Repo: https://github.com/jtchen2k/modern-ecnu-thesis
-// 在线模板可能不会更新得很及时，如果需要最新版本，请关注 Repo
+/*
+ * lib.typ
+ *
+ * @project: modern-ecnu-thesis
+ * @author: OrangeX4, Juntong Chen (dev@jtchen.io)
+ * @created: 2025-01-06 22:37:34
+ * @modified: 2025-01-09 01:35:49
+*
+ * 华东师范大学学位论文模板
+ *    Repo: https://github.com/jtchen2k/modern-ecnu-thesis
+ *    在线模板可能不会更新得很及时，如果需要最新版本，请关注 GitHub Repo.
+ *
+ * Copyright (c) 2025 Juntong Chen. All rights reserved.
+ */
 
 #import "@preview/anti-matter:0.1.1": fence as mainmatter-end
 #import "layouts/doc.typ": doc
@@ -27,7 +37,7 @@
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
 #import "utils/custom-heading.typ": heading-display, active-heading, current-heading
-#import "utils/indent.typ": indent, fake-par
+#import "utils/indent.typ": indent, fake-par, no-indent
 #import "utils/panic-page.typ": panic-page
 #import "@preview/i-figured:0.2.4": show-figure, show-equation
 #import "utils/style.typ": 字体, 字号
@@ -74,9 +84,10 @@
     school-code: "10269",
     degree: auto,
     degree-en: auto,
+    committee-members: (("赵六", "教授", "华东师范大学", "主席")),
   ) + info
 
-  (
+  return (
     // 将传入参数再导出
     doctype: doctype,
     degree: degree,
@@ -90,14 +101,10 @@
       doc(..args, info: info + args.named().at("info", default: (:)))
     },
     preface: (..args) => {
-      preface(twoside: twoside, ..args)
+      preface(doctype: doctype, twoside: twoside, ..args)
     },
     mainmatter: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
-        mainmatter(doctype: doctype, twoside: twoside, display-header: true, ..args, fonts: fonts + args.named().at("fonts", default: (:)))
-      } else {
-        mainmatter(twoside: twoside, ..args, fonts: fonts + args.named().at("fonts", default: (:)))
-      }
+      mainmatter(doctype: doctype, twoside: twoside,  display-header: true, ..args, fonts: fonts + args.named().at("fonts", default: (:)))
     },
     mainmatter-end: (..args) => {
       mainmatter-end(..args)
@@ -147,14 +154,8 @@
         )
       } else if doctype == "postdoc" {
         panic("postdoc has not yet been implemented.")
-      } else {
-        bachelor-decl-page(
-          anonymous: anonymous,
-          twoside: twoside,
-          ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
-          info: info + args.named().at("info", default: (:)),
-        )
+      } else if doctype == "bachelor" {
+        panic-page("declaration page has not yet been implemented for bachelors.")
       }
     },
     committee: (..args) => {
@@ -222,7 +223,15 @@
     // 目录页
     outline-page: (..args) => {
       if (doctype == "bachelor") {
-        bachelor-outline-page(twoside: twoside, ..args, fonts: fonts + args.named().at("fonts", default: (:)))
+        bachelor-outline-page(
+          doctype: doctype,
+          twoside: twoside,
+          title-text-args: (font: 字体.黑体, size: 字号.三号, weight: "bold"),
+          show-heading: true,
+          vspace: (1.5em, 1.2em),
+          indent: (0em, 0.5em, 1em),
+          ..args,
+          fonts: fonts + args.named().at("fonts", default: (:)))
       } else {
         bachelor-outline-page(
           twoside: twoside,
@@ -241,7 +250,7 @@
     list-of-figures: (..args) => {
       list-of-figures(
         twoside: twoside,
-        show-heading: doctype != "bachelor",
+        show-heading: true,
         title-text-args: (font: 字体.黑体, size: 字号.三号, weight: "bold"),
         doctype: doctype,
         ..args,
@@ -254,7 +263,7 @@
       list-of-tables(
         twoside: twoside,
         doctype: doctype,
-        show-heading: doctype != "bachelor",
+        show-heading: true,
         title-text-args: (font: 字体.黑体, size: 字号.三号, weight: "bold"),
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
@@ -266,7 +275,7 @@
       notation(
         ..args,
         twoside: twoside,
-        show-heading: doctype != "bachelor",
+        show-heading: true,
         title-text-args: (font: 字体.黑体, size: 字号.三号, weight: "bold"),
         doctype: doctype,
         fonts: fonts + args.named().at("fonts", default: (:)),

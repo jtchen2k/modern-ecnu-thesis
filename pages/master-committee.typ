@@ -4,7 +4,7 @@
  * @project: modern-ecnu-thesis
  * @author: Juntong Chen (dev@jtchen.io)
  * @created: 2025-01-05 01:36:20
- * @modified: 2025-01-07 03:00:51
+ * @modified: 2025-01-08 19:00:45
  *
  * Copyright (c) 2025 Juntong Chen. All rights reserved.
  */
@@ -20,10 +20,16 @@
   set align(center)
 
   text(
-    font: 字体.黑体,
+    font: fonts.楷体,
+    size: 字号.三号,
+    info.author
+  )
+  h(0.5em)
+  text(
+    font: fonts.黑体,
     size: 字号.三号,
     weight: "bold",
-    [#info.author#if doctype == "master" { "硕士" } else { "博士" }学位论文答辩委员会成员名单],
+    [#if doctype == "master" { "硕士" } else { "博士" }学位论文答辩委员会成员名单],
   )
 
   v(3em)
@@ -36,7 +42,7 @@
     stroke: 0.5pt + black,
     [*姓名*],
     [*职称*],
-    [*华东师范大学*],
+    [*单位*],
     [*备注*],
     ..info.committee-members.flatten(),
   )

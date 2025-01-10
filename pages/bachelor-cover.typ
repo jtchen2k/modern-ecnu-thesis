@@ -1,5 +1,6 @@
-#import "../utils/datetime-display.typ": datetime-display
+#import "../utils/datetime-display.typ": datetime-display-bachelor
 #import "../utils/style.typ": 字号, 字体
+#import "../utils/str.typ": to-normal-str
 
 // 本科生封面
 #let bachelor-cover(
@@ -11,16 +12,21 @@
   // 其他参数
   stoke-width: 0.5pt,
   min-title-lines: 2,
-  info-inset: (x: 0pt, bottom: 1pt),
-  info-key-width: 72pt,
-  info-key-font: "楷体",
-  info-value-font: "楷体",
-  column-gutter: -3pt,
+  info-inset: (x: 0pt, bottom: 3pt),
+  info-title-inset: (x: 0pt, bottom: 7pt),
+  info-key-width: 80pt,
+  info-key-font: "宋体",
+  info-value-font: "宋体",
+  column-gutter: 1pt,
   row-gutter: 11.5pt,
   anonymous-info-keys: ("grade", "student-id", "author", "supervisor", "supervisor-ii"),
   bold-info-keys: ("title",),
   bold-level: "bold",
-  datetime-display: datetime-display,
+  datetime-display: datetime-display-bachelor,
+  title-line-length: 320pt,
+  title-line-length-en: 300pt,
+  meta-info-line-length: 200pt,
+  meta-info-line-length-en: 230pt,
 ) = {
   // 1.  默认参数
   fonts = 字体 + fonts
@@ -40,124 +46,131 @@
   if type(info.title) == str {
     info.title = info.title.split("\n")
   }
-  // 2.2 根据 min-title-lines 填充标题
-  info.title = info.title + range(min-title-lines - info.title.len()).map((it) => "　")
+  if type(info.title-en) == str {
+    info.title-en = info.title-en.split("\n")
+  }
+  if type(info.department) == str {
+    info.department = info.department.split("\n")
+  }
   // 2.3 处理提交日期
   if type(info.submit-date) == datetime {
     info.submit-date = datetime-display(info.submit-date)
   }
 
   // 3.  内置辅助函数
-  let info-key(body) = {
+  let info-key(with-tail: true, body) = {
     rect(
       width: 100%,
       inset: info-inset,
       stroke: none,
-      text(
-        font: fonts.at(info-key-font, default: "楷体"),
-        size: 字号.三号,
-        body
-      ),
+      text(font: fonts.at(info-key-font, default: "宋体"), weight: "bold", size: 字号.小三, body + if with-tail { "：" } else { "" }),
     )
   }
 
-  let info-value(key, body) = {
+  let info-value(size: 字号.小三, key, body) = {
     set align(center)
-    rect(
-      width: 100%,
-      inset: info-inset,
-      stroke: (bottom: stoke-width + black),
-      text(
-        font: fonts.at(info-value-font, default: "宋体"),
-        size: 字号.三号,
-        weight: if (key in bold-info-keys) { bold-level } else { "regular" },
-        bottom-edge: "descender",
-        body,
-      ),
-    )
+    rect(width: 100%, inset: info-inset, stroke: (bottom: stoke-width + black), text(
+      font: fonts.at(info-value-font, default: "宋体"),
+      size: size,
+      weight: "bold",
+      bottom-edge: "descender",
+      body,
+    ))
   }
 
-  let info-long-value(key, body) = {
-    grid.cell(colspan: 3,
-      info-value(
-        key,
-        if anonymous and (key in anonymous-info-keys) {
-          "██████████"
-        } else {
-          body
-        }
-      )
-    )
+  let info-long-value(size: 字号.小三, key, body) = {
+    grid.cell(colspan: 3, info-value(size: size, key, if anonymous and (key in anonymous-info-keys) {
+      "██████████"
+    } else {
+      body
+    }))
+  }
+
+  let info-title-value(size: 字号.小一, body) = {
+    set align(center)
+    underline(offset: 6pt, stroke: 1.25pt, text(
+      font: fonts.at(info-value-font, default: "宋体"),
+      size: size,
+      weight: "bold",
+      bottom-edge: "baseline",
+      body,
+    ))
   }
 
   let info-short-value(key, body) = {
-    info-value(
-      key,
-      if anonymous and (key in anonymous-info-keys) {
-        "█████"
-      } else {
-        body
-      }
-    )
+    info-value(key, if anonymous and (key in anonymous-info-keys) {
+      "█████"
+    } else {
+      body
+    })
   }
 
+  // 存储状态用于后续页眉
+  let s = state("title")
+  context s.update(to-normal-str(src: info.title))
+  let sen = state("title-en")
+  context sen.update(to-normal-str(src: info.title-en))
 
   // 4.  正式渲染
-
   pagebreak(weak: true, to: if twoside { "odd" })
 
   // 居中对齐
   set align(center)
 
+  [
+    #set text(font: fonts.宋体, size: 字号.小四, weight: "bold")
+    #info.grade 届本科生学士学位论文
+    #h(1fr)
+    学校代码：#underline(stroke: 0.5pt, offset: 3pt)[*10269*]
+  ]
+
+  v(12pt)
+
   // 匿名化处理去掉封面标识
   if anonymous {
-    v(52pt)
+    v(60pt)
   } else {
     // 封面图标
     v(6pt)
-    image("../assets/vi/nju-emblem.svg", width: 2.38cm)
-    v(22pt)
-    // 调整一下左边的间距
-    pad(image("../assets/vi/nju-name.svg", width: 10.5cm), left: 0.4cm)
-    v(2pt)
+    image("../assets/ecnu-bachelor-thesis-cover.svg", width: 10cm)
   }
-
-  // 将中文之间的空格间隙从 0.25 em 调整到 0.5 em
-  text(size: 字号.一号, font: fonts.宋体, spacing: 200%, weight: "bold")[本 科 毕 业 论 文]
 
   if anonymous {
-    v(155pt)
+    v(40pt)
   } else {
-    v(67pt)
+    v(15pt)
   }
 
-  block(width: 318pt, grid(
-    columns: (info-key-width, 1fr, info-key-width, 1fr),
-    column-gutter: column-gutter,
-    row-gutter: row-gutter,
-    info-key("院　　系"),
-    info-long-value("department", info.department),
-    info-key("专　　业"),
-    info-long-value("major", info.major),
-    info-key("题　　目"),
-    ..info.title.map((s) => info-long-value("title", s)).intersperse(info-key("　")),
-    info-key("年　　级"),
-    info-short-value("grade", info.grade),
-    info-key("学　　号"),
-    info-short-value("student-id", info.student-id),
-    info-key("学生姓名"),
-    info-long-value("author", info.author),
-    info-key("指导教师"),
-    info-short-value("supervisor", info.supervisor.at(0)),
-    info-key("职　　称"),
-    info-short-value("supervisor", info.supervisor.at(1)),
-    ..(if info.supervisor-ii != () {(
-      info-key("第二导师"),
-      info-short-value("supervisor-ii", info.supervisor-ii.at(0)),
+  stack(dir: ttb, spacing: 1fr,
+    block(width: title-line-length)[
+      #stack(
+        dir: ttb,
+        spacing: 12pt,
+        ..info.title.map((it) => info-title-value(size: 字号.小一, it)),
+        h(0.5em),
+        ..info.title-en.map((it) => info-title-value(size: 字号.二号, it))
+      )
+    ],
+
+    block(width: 80pt + meta-info-line-length, grid(
+      columns: (info-key-width, 1fr, info-key-width, 1fr),
+      column-gutter: column-gutter,
+      row-gutter: row-gutter,
+      info-key("姓　　名"),
+      info-long-value("author", info.author),
+      info-key("学　　号"),
+      info-long-value("student-id", info.student-id),
+      info-key("院　　系"),
+      ..info.department.map((it) => info-long-value("department", it)).intersperse(info-key("", with-tail: false)),
+      info-key("专　　业"),
+      info-long-value("major", info.major),
+      info-key("指导教师"),
+      info-long-value("supervisor", info.supervisor.at(0)),
       info-key("职　　称"),
-      info-short-value("supervisor-ii", info.supervisor-ii.at(1)),
-    )} else {()}),
-    info-key("提交日期"),
-    info-long-value("submit-date", info.submit-date),
-  ))
+      info-long-value("supervisor", info.supervisor.at(1)),
+    )),
+
+    text(font: fonts.宋体, size: 字号.四号, weight: "bold", info.submit-date),
+  )
+
 }

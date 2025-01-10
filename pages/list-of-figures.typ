@@ -22,7 +22,7 @@
   font: auto,
   size: 字号.小四,
   // 垂直间距
-  vspace: 14pt,
+  vspace: 1.2em,
   // 是否显示点号
   fill: auto,
   show-heading: false,

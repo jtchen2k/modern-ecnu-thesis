@@ -18,7 +18,7 @@
   info: (:),
   // 其他参数
   keywords: (),
-  outline-title: "ABSTRACT",
+  outline-title: "Abstract",
   outlined: true,
   abstract-title-weight: "regular",
   stoke-width: 0.5pt,
@@ -60,13 +60,13 @@
   [
     #set par(leading: leading, justify: true)
 
-    #show par: set block(spacing: spacing)
+    // #show par: set block(spacing: spacing)
     #set block(spacing: spacing)
 
     #set align(center)
     #block[
         #set text(font: fonts.黑体, size: 字号.小三, weight: "bold")
-        ABSTRACT
+        Abstract
     ]
 
     // 标记一个不可见的标题用于目录生成
@@ -82,7 +82,7 @@
 
 
     #block[
-      *Keywords: *_#(("",) + keywords.intersperse(", ")).sum()_
+      *Keywords: * _#(("",) + keywords.intersperse(", ")).sum()_
     ]
   ]
 }

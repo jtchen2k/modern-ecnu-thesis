@@ -136,6 +136,7 @@
       ),
     )
   }
+  let info-value-cn = info-value.with(weight: "bold")
 
   let anonymous-text(key, short: false, body) = {
     if (anonymous and (key in anonymous-info-keys)) {
@@ -209,6 +210,8 @@
 
   v(32pt)
 
+  set align(center)
+
   stack(
     dir: ttb,
     spacing: 1fr,
@@ -228,17 +231,17 @@
         column-gutter: info-column-gutter,
         row-gutter: info-row-gutter,
         info-key("院系"),
-        ..info.department.map((s) => info-value("department", s)).intersperse(info-key("　", with-tail: false, justify: false, is-meta: true)),
-        info-key(if info.degree == "academic" { "专业" } else { "专业学位类别" }),
-        info-value("major", info.major),
-        info-key(if info.degree == "academic" { "研究方向" } else { "专业学位领域" }),
-        info-value("field", info.field),
+        ..info.department.map((s) => info-value-cn("department", s)).intersperse(info-key("　", with-tail: false, justify: false, is-meta: true)),
+        info-key(if degree == "academic" { "专业" } else { "专业学位类别" }),
+        info-value-cn("major", info.major),
+        info-key(if degree == "academic" { "研究方向" } else { "专业学位领域" }),
+        info-value-cn("field", info.field),
         info-key("学位申请人"),
-        info-value("author", info.author),
+        info-value-cn("author", info.author),
         info-key("指导教师"),
-        info-value("supervisor", info.supervisor.intersperse(" ").sum()),
+        info-value-cn("supervisor", info.supervisor.intersperse(" ").sum()),
         ..(
-          if info.supervisor-ii != () { (info-key-indent(), info-value("supervisor-ii", info.supervisor-ii.intersperse(" ").sum()),) } else { () }
+          if info.supervisor-ii != () { (info-key-indent(), info-value-cn("supervisor-ii", info.supervisor-ii.intersperse(" ").sum()),) } else { () }
         ),
       ),
     ),
@@ -287,7 +290,7 @@
 
   v(40pt)
 
-  let en-info-key = info-key.with(info-inset: meta-info-inset, justify: false, size: 字号.小四, with-tail: false)
+  let en-info-key = info-key.with(info-inset: meta-info-inset, justify: false, size: 字号.小四, with-tail: false, weight: "regular")
   let en-info-value = info-value.with(info-inset: meta-info-inset, size: 字号.小四)
 
   stack(
@@ -305,13 +308,13 @@
     block(
       grid(
         columns: (120pt, meta-info-line-length-en),
-        column-gutter: 10pt,
+        column-gutter: 0pt,
         row-gutter: info-row-gutter,
         en-info-key("Department / School:"),
         ..info.department-en.map((s) => en-info-value("department", s)).intersperse(info-key("　", justify: false, with-tail: false, is-meta: true)),
-        en-info-key(if info.degree == "academic" { "Major:" } else { "Category:" }),
+        en-info-key(if degree == "academic" { "Major:" } else { "Category:" }),
         en-info-value("major", info.major-en),
-        en-info-key(if info.degree == "academic" { "Research Direction:" } else { "Field:" }),
+        en-info-key(if degree == "academic" { "Research Direction:" } else { "Field:" }),
         en-info-value("field", info.field-en),
         en-info-key("Candidate:"),
         en-info-value("author", info.author-en),

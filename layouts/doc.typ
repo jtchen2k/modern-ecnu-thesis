@@ -1,3 +1,4 @@
+#import "../utils/str.typ": to-normal-str
 // 文稿设置，可以进行一些像页面边距这类的全局设置
 #let doc(
   // documentclass 传入参数
@@ -5,7 +6,7 @@
   // 其他参数
   fallback: false,  // 字体缺失时使用 fallback，不显示豆腐块
   lang: "zh",
-  margin: (top: 3cm, bottom: 2.5cm, left: 2.6cm, right: 2.6cm),
+  margin: (top: 3cm, bottom: 2.5cm, left: 3.18cm, right: 3.18cm),
   it,
 ) = {
   // 1.  默认参数
@@ -26,7 +27,7 @@
 
   // 4.  PDF 元信息
   set document(
-    title: (("",)+ info.title).sum(),
+    title: to-normal-str(src: info.title),
     author: info.author,
   )
 

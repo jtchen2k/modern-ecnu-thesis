@@ -1,10 +1,10 @@
 /*
  * panic-page.typ
  *
- * @project: utils
+ * @project: modern-ecnu-thesis
  * @author: Juntong Chen (dev@jtchen.io)
  * @created: 2025-01-05 02:03:18
- * @modified: 2025-01-05 02:16:42
+ * @modified: 2025-01-08 21:34:45
  *
  * Copyright (c) 2025 Juntong Chen. All rights reserved.
  */

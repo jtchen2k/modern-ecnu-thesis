@@ -3,6 +3,8 @@
 #import "../utils/indent.typ": fake-par
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/invisible-heading.typ": invisible-heading
+#import "../utils/custom-heading.typ": heading-content
+#import "../utils/pagebreak-from-odd.typ": pagebreak-from-odd
 
 // 本科生中文摘要页
 #let bachelor-abstract(
@@ -13,8 +15,8 @@
   info: (:),
   // 其他参数
   keywords: (),
-  outline-title: "中文摘要",
-  outlined: false,
+  outline-title: "摘要",
+  outlined: true,
   anonymous-info-keys: ("author", "supervisor", "supervisor-ii"),
   leading: 1.28em,
   spacing: 1.28em,
@@ -36,54 +38,42 @@
     info.title = info.title.split("\n")
   }
 
-  // 3.  内置辅助函数
-  let info-value(key, body) = {
-    if (not anonymous or (key not in anonymous-info-keys)) {
-      body
+  set page(
+    header: {
+      heading-content(doctype: "bachelor", fonts: fonts)
     }
-  }
+  )
 
-  // 4.  正式渲染
-  pagebreak(weak: true, to: if twoside { "odd" })
+  // 渲染
+  pagebreak(weak: true)
+
+  let s = state("title")
 
   [
-    #set text(font: fonts.楷体, size: 字号.小四)
+    #set text(font: fonts.宋体, size: 字号.小四)
     #set par(leading: leading, justify: true)
-    #show par: set block(spacing: spacing)
+    // #show par: set block(spacing: spacing)
 
-    // 标记一个不可见的标题用于目录生成
     #invisible-heading(level: 1, outlined: outlined, outline-title)
 
     #align(center)[
-      #set text(size: 字号.小二, weight: "bold")
-
-      #v(1em)
-
-      #double-underline[#fakebold[华东师范大学本科生毕业论文（设计、作品）中文摘要]]
+      #set text(font: fonts.黑体, size: 字号.三号)
+      #context s.get()
     ]
 
-    #fakebold[题目：]#info-value("title", (("",)+ info.title).sum())
+    #v(1em)
+    #text(font: fonts.黑体)[摘要：]
 
-    #fakebold[院系：]#info-value("department", info.department)
-
-    #fakebold[专业：]#info-value("major", info.major)
-
-    #fakebold[本科生姓名：]#info-value("author", info.author)
-
-    #fakebold[指导教师（姓名、职称）：]#info-value("supervisor", info.supervisor.at(0) + info.supervisor.at(1)) #(if info.supervisor-ii != () [#h(1em) #info-value("supervisor-ii", info.supervisor-ii.at(0) + info.supervisor-ii.at(1))])
-
-    #fakebold[摘要：]
+    #set text(font: fonts.宋体)
 
     #[
       #set par(first-line-indent: 2em)
-
       #fake-par
-
       #body
     ]
 
     #v(1em)
 
-    #fakebold[关键词：]#(("",)+ keywords.intersperse("；")).sum()
+    #text(font: fonts.黑体)[关键词：]#(("",)+ keywords.intersperse("，")).sum()
   ]
 }

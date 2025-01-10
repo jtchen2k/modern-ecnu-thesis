@@ -18,7 +18,7 @@
   info: (:),
   // 其他参数
   keywords: (),
-  outline-title: "中文摘要",
+  outline-title: "摘要",
   outlined: true,
   abstract-title-weight: "regular",
   stoke-width: 0.5pt,
@@ -63,13 +63,13 @@
     #set text(font: fonts.楷体, size: 字号.四号)
     #set par(leading: leading, justify: true)
 
-    #show par: set block(spacing: spacing)
+    // #show par: set block(spacing: spacing)
     #set block(spacing: spacing)
 
     #set align(center)
     #block[
         #set text(font: fonts.黑体, size: 字号.小三, weight: "bold")
-        中文摘要
+        摘#h(2em)要
     ]
 
     // 标记一个不可见的标题用于目录生成
@@ -83,7 +83,7 @@
 
 
     #block[
-      #text(font: fonts.黑体, size: 字号.四号, weight: "bold", "关键词：")#(("",) + keywords.intersperse("，")).sum()
+      #text(font: fonts.黑体, weight: "bold", "关键词：")#(("",) + keywords.intersperse("，")).sum()
     ]
   ]
 }

@@ -24,7 +24,7 @@
   font: auto,
   size: (字号.四号, 字号.小四),
   // 垂直间距
-  vspace: (25pt, 14pt),
+  vspace: (12pt, 12pt),
   indent: (0pt, 18pt, 28pt),
   // 全都显示点号
   fill: (auto,),
