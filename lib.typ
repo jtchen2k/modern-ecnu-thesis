@@ -4,7 +4,7 @@
  * @project: modern-ecnu-thesis
  * @author: OrangeX4, Juntong Chen (dev@jtchen.io)
  * @created: 2025-01-06 22:37:34
- * @modified: 2025-01-10 01:58:02
+ * @modified: 2025-01-11 15:11:45
 *
  * 华东师范大学学位论文模板
  *    Repo: https://github.com/jtchen2k/modern-ecnu-thesis
@@ -39,6 +39,7 @@
 #import "utils/custom-heading.typ": heading-display, active-heading, current-heading
 #import "utils/indent.typ": indent, fake-par, no-indent
 #import "utils/panic-page.typ": panic-page
+#import "utils/word-counter.typ": *
 #import "@preview/i-figured:0.2.4": show-figure, show-equation
 #import "utils/style.typ": 字体, 字号
 

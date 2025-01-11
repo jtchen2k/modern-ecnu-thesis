@@ -6,6 +6,7 @@
 #import "../utils/indent.typ": fake-par
 #import "../utils/unpairs.typ": unpairs
 #import "../utils/pagebreak-from-odd.typ": pagebreak-from-odd
+#import "../utils/word-counter.typ": *
 
 #let mainmatter(
   // documentclass 传入参数
@@ -215,8 +216,15 @@
     )
   }))
 
-  it
+  // 字数统计（正文 + 附录）
+  //     typst query main.typ '<total-words>' 2>/dev/null --field value --one
 
+  context [
+    #metadata(state("total-words-cjk").final()) <total-words>
+    #metadata(state("total-characters").final()) <total-chars>
+  ]
+
+  it
   // 正文结束标志，不可缺少
   // 这里放在附录后面，使得页码能正确计数
   fence()

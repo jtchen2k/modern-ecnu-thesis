@@ -1,4 +1,4 @@
-#import "@preview/modern-ecnu-thesis:0.1.0": documentclass, indent, no-indent
+#import "@preview/modern-ecnu-thesis:0.1.0": documentclass, indent, no-indent, word-count-cjk, total-words
 
 // 模板用到的主要字体：https://github.com/jtchen2k/modern-ecnu-thesis/tree/main/fonts/
 // 如果是在 Web App 上编辑，你应该手动上传上述字体文件，否则不能正常使用「楷体」和「仿宋」。
@@ -108,6 +108,9 @@
 // 正文
 // 可选的，可以通过 #show: mainmatter.with(figure-clearance: 0pt) 来设置浮动图表的间距或其他参数
 #show: mainmatter
+
+// 字数统计开始
+#show: word-count-cjk
 
 = 导　论
 
@@ -219,6 +222,15 @@ int main() {
 
 #no-indent 比如，这是一个没有首行缩进的段落。
 
+=== 字数统计
+
+正文与附录的的总字数为：#total-words。你也可以使用以下命令来使用命令行工具统计字数 / 字符数：
+
+```bash
+typst query thesis.typ '<total-words>' 2>/dev/null --field value --one
+typst query thesis.typ '<total-characters>' 2>/dev/null --field value --one
+```
+
 = 正　文
 
 // 用于生成占位符。可删除。
@@ -234,8 +246,6 @@ int main() {
 + 自定义段落编号
 + 自定义段落编号
 ]
-
-
 
 // 手动分页示例
 #if twoside {
