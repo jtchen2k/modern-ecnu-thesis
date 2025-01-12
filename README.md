@@ -15,9 +15,14 @@
 
 对于研究生，我们参考华东师范大研究生院于 2023 年发布的[华东师范大学博士、硕士学位论文基本格式要求](https://yjsy.ecnu.edu.cn/8e/62/c42090a429666/page.htm)；对于本科生，我们参考华东师范大学教务处于 2021 年更新的[华东师范大学本科生毕业论文（设计）格式要求](http://www.jwc.ecnu.edu.cn/d4/be/c40573a513214/page.htm)。格式适配于 2025 年初，后续使用的同学请留意参考校方的最新通知。
 
-![1736471485839](https://jtchen.s3.ap-northeast-1.amazonaws.com/v1/img/2025/01/09/1736471485839.png)
+![1736643710702](https://jtchen.s3.ap-northeast-1.amazonaws.com/v1/img/2025/01/11/1736643710702.png)
 
-在这里可以找到硕士学位论文的示例文档：[thesis.pdf](https://github.com/jtchen2k/modern-ecnu-thesis/releases/download/0.1.0/thesis.pdf)。
+示例文档：
+- 本科学位论文 [modern-ecnu-thesis-bachelor.pdf](https://github.com/jtchen2k/modern-ecnu-thesis/releases/latest/download/modern-ecnu-thesis-bachelor.pdf)
+- 硕士学位论文，学术学位 [modern-ecnu-thesis-master-academic.pdf](https://github.com/jtchen2k/modern-ecnu-thesis/releases/latest/download/modern-ecnu-thesis-master-academic.pdf)
+- 硕士学位论文，专业学位 [modern-ecnu-thesis-master-professional.pdf](https://github.com/jtchen2k/modern-ecnu-thesis/releases/latest/download/modern-ecnu-thesis-master-professional.pdf)
+- 博士学位论文，学术学位 [modern-ecnu-thesis-doctor-academic.pdf](https://github.com/jtchen2k/modern-ecnu-thesis/releases/latest/download/modern-ecnu-thesis-doctor-academic.pdf)
+- 博士学位论文，专业学位 [modern-ecnu-thesis-doctor-professional.pdf](https://github.com/jtchen2k/modern-ecnu-thesis/releases/latest/download/modern-ecnu-thesis-doctor-professional.pdf)
 
 ## Why Typst
 
