@@ -19,6 +19,7 @@
 ![1736643710702](https://jtchen.s3.ap-northeast-1.amazonaws.com/v1/img/2025/01/11/1736643710702.png)
 
 示例文档：
+
 - 本科学位论文 [modern-ecnu-thesis-bachelor.pdf](https://github.com/jtchen2k/modern-ecnu-thesis/releases/latest/download/modern-ecnu-thesis-bachelor.pdf)
 - 硕士学位论文，学术学位 [modern-ecnu-thesis-master-academic.pdf](https://github.com/jtchen2k/modern-ecnu-thesis/releases/latest/download/modern-ecnu-thesis-master-academic.pdf)
 - 硕士学位论文，专业学位 [modern-ecnu-thesis-master-professional.pdf](https://github.com/jtchen2k/modern-ecnu-thesis/releases/latest/download/modern-ecnu-thesis-master-professional.pdf)
@@ -41,6 +42,8 @@ Typst 是一个基于 Rust 的现代化的排版引擎。它具备类似 Markdow
 
 1. 在 VSCode 中安装 [Tinymist Typst](https://marketplace.visualstudio.com/items?itemName=myriad-dreamin.tinymist) 插件。
 2. 按下 `Cmd / Ctrl + Shift + P` 打开命令界面，输入 `Typst: Show available Typst templates (gallery) for picking up a template` 打开 Tinymist 提供的 Template Gallery。在列表中搜索 `modern-ecnu-thesis`，点击 `❤` 按钮收藏，点击 `+` 来创建论文模板。
+
+   ![1736800054020](https://jtchen.s3.ap-northeast-1.amazonaws.com/v1/img/2025/01/13/1736800054020.png)
 3. 用 VS Code 打开生成的目录，打开 `thesis.typ` 文件，按下 `Ctrl / Cmd + K V` 或者是点击文档顶部的 Preview 来实时预览。
 
 #### 从 git 获取模板
@@ -73,9 +76,12 @@ ln -s </path/to/modern-ecnu-thesis> $DATA_DIR/typst/packages/preview/modern-ecnu
 
 ### 在线编辑
 
-在 Typst Web App 中选择 `Start from template`，随后搜索 `modern-ecnu-thesis` 即可开始使用。
+在 [Typst Web App](https://typst.app/app/) 中选择 `Start from template`，随后搜索 `modern-ecnu-thesis` 即可开始使用。
 
-为了在 Web 编辑器中正确显示字体，你需要将[这里](https://github.com/jtchen2k/modern-ecnu-thesis/tree/main/fonts)的字体文件上传到 Typst Web App。
+![1736800622590](https://jtchen.s3.ap-northeast-1.amazonaws.com/v1/img/2025/01/13/1736800622590.png)
+
+> [!IMPORTANT]
+> 为了在 Web 编辑器中正确显示字体（宋体、黑体、楷体、仿宋、Times、Arial 等），你需要将[该文件夹](https://github.com/jtchen2k/modern-ecnu-thesis/tree/main/fonts)内的字体文件**全部**上传到 Typst Web App。将整个 fonts 文件夹上传到工程任意位置即可。
 
 ## Tips
 
@@ -103,19 +109,18 @@ context state("total-characters").final()
 
 - Typst 支持的图片格式包括 png, jpeg, gif 与 svg，不支持 pdf 与 eps。你可以使用 InkSpace 或 [pdf2svg](https://github.com/dawbarton/pdf2svg) 等工具将 pdf 转换为 svg 格式：
 
-    ```bash
-    pdf2svg input.pdf output.svg
-    ```
-
+  ```bash
+  pdf2svg input.pdf output.svg
+  ```
 - Typst 现在已经支持图片的浮动排版了。你可以使用 `figure` 的 `placement` 属性来控制图片位置，可以实现类似 LaTeX 的 `[htbp]` 功能：
 
-    ```typst
-    figure {
-        placement: "top";
-        caption: "image caption";
-        ...
-    }[#image("...)] <label>
-    ```
+  ```typst
+  figure {
+      placement: "top";
+      caption: "image caption";
+      ...
+  }[#image("...)] <label>
+  ```
 - Typst 有一套自己的公式语法，与 LaTeX 大同小异且更加简洁。如果你已经十分熟悉 LaTeX 的语法并希望继续使用，可以引入 [MiTeX](https://github.com/mitex-rs/mitex)，它将允许你在 Typst 中使用 LaTeX 数学语法。
 - Typst 原生兼容了 biblatex 引用格式，直接修改 ref.bib 即可。
 
