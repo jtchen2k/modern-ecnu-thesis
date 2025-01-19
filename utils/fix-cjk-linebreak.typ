@@ -4,7 +4,7 @@
  * @project: modern-ecnu-thesis
  * @author: Juntong Chen (dev@jtchen.io)
  * @created: 2025-01-12 15:12:15
- * @modified: 2025-01-12 22:12:32
+ * @modified: 2025-01-14 20:27:32
  *
  * Copyright (c) 2025 Juntong Chen. All rights reserved.
  */
@@ -13,7 +13,7 @@
 //    详见：https://github.com/typst/typst/issues/792#issuecomment-2310139085
 #let fix-cjk-linebreak(body, debug: false) = [
   // 不去除章后的字符
-  #let cjk-char = "[\p{Han}，。；：！？‘’“”（）「」【】…—&&[^章节]]"
+  #let cjk-char = "[\p{Han}，。；：！？‘’“”（）「」『』【】…—&&[^章节]]"
   // 没有使用 \s 来匹配空白字符的原因是为了保留全角空格。
   #let cjk-re = regex("(" + cjk-char + ")([ \\t\\r]+(" + cjk-char + ")+)+")
   #show cjk-re: it => {
