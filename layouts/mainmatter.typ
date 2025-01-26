@@ -1,7 +1,7 @@
 #import "@preview/i-figured:0.2.4"
 #import "../utils/style.typ": 字号, 字体
 #import "../utils/custom-numbering.typ": custom-numbering
-#import "../utils/custom-heading.typ": heading-display, active-heading, current-heading, heading-content
+#import "../utils/custom-heading.typ": heading-content
 #import "../utils/indent.typ": fake-par
 #import "../utils/unpairs.typ": unpairs
 #import "../utils/pagebreak-from-odd.typ": pagebreak-from-odd
@@ -25,10 +25,10 @@
   text-args: auto,
   // 标题字体与字号
   heading-font: auto,
-  heading-size: (字号.三号, 字号.四号,),
+  heading-size: (字号.三号, 字号.四号, 字号.四号, 字号.小四),
   heading-weight: ("regular",),
-  heading-above: (1.0em, 2.0em, 1.5em),
-  heading-below: (1.5em, 1.5em, 1.25em),
+  heading-above: (1.5em, 2.5em),
+  heading-below: (2.0em, 1.5em),
   heading-pagebreak: (true, false),
   heading-align: (center, auto),
   // 页眉
@@ -101,7 +101,7 @@
     first-line-indent: first-line-indent
   )
   // show par: set block(spacing: spacing)
-  show raw: set text(font: fonts.等宽)
+  show raw: set text(font: fonts.等宽, size: text-args.size)
   show raw.where(block: true): set par(leading: 1em)
   // 3.2 脚注样式
   show footnote.entry: set text(font: fonts.宋体, size: 字号.五号)
@@ -110,6 +110,7 @@
   show figure: show-figure
   // 3.4 设置 equation 的编号和假段落首行缩进
   show math.equation.where(block: true): show-equation
+  show math.equation.where(block: true): set block(inset: (y: 0.3em, x: 0em))
   // 3.5 表格表头置顶 + 不用冒号用空格分割 + 样式
   show figure.where(
     kind: table
@@ -166,7 +167,7 @@
       above: array-at(heading-above, it.level),
       below: array-at(heading-below, it.level),
     )
-    it
+    it + fake-par + v(-0.15em)
   }
   // 4.3 标题居中与自动换页
   show heading: it => context {
@@ -182,6 +183,26 @@
     } else {
       it
     }
+  }
+  // 4.4 防止标题间距重复 https://github.com/typst/typst/issues/2953#issuecomment-1858823455
+  show heading : it => context {
+    // Finds all previous headings, inclusive
+    let elems = query(selector(heading).before(here()))
+    if elems.len() > 1 { // If there are at least 2
+      let prev-heading = elems.at(-2)
+      if (
+        prev-heading.level > 1 and
+        prev-heading.location().page() == it.location().page() and
+        prev-heading.location().position().y + 60pt > it.location().position().y
+      ) [
+        #v(-calc.abs(array-at(heading-above, it.level) - array-at(heading-below, it.level)))
+        #it
+      ] else [
+        #it
+      ]
+    } else [
+      #it
+    ]
   }
 
   // 重置 footnote 计数器
@@ -218,7 +239,7 @@
 
   // 列表样式
   set enum(indent: 0.9em, body-indent: 0.35em)
-  set list(indent: 1em, body-indent: 0.55em)
+  set list(indent: 2em, body-indent: 0.55em)
 
   // 引述文本样式
   set quote(block: true)
@@ -227,10 +248,9 @@
 
   set underline(stroke: 0.5pt + black, offset: 0.35em)
 
-  // 处理一些元素后第一段文本的首行缩进
-  show selector.or(heading, figure, list, enum, quote, terms): it => {
-    it
-    fake-par
+  // 处理其他元素后第一段文本的首行缩进
+  show selector.or(figure, list, enum, quote, terms): it => {
+    it + fake-par
   }
 
   // 处理一级标题的引用格式
