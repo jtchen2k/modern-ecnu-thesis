@@ -60,20 +60,22 @@
   )
 
   [
+
     #set text(font: fonts.楷体, size: 字号.四号)
     #set par(leading: leading, justify: true)
 
     // #show par: set block(spacing: spacing)
     #set block(spacing: spacing)
 
+
+    // 标记一个不可见的标题用于目录生成
+    #invisible-heading(level: 1, outlined: outlined, outline-title)
+
     #set align(center)
     #block[
         #set text(font: fonts.黑体, size: 字号.小三, weight: "bold")
         摘#h(2em)要
     ]
-
-    // 标记一个不可见的标题用于目录生成
-    #invisible-heading(level: 1, outlined: outlined, outline-title)
 
     #set align(left)
 
