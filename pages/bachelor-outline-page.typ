@@ -1,4 +1,3 @@
-#import "@preview/outrageous:0.3.0"
 #import "../utils/invisible-heading.typ": invisible-heading
 #import "../utils/style.typ": 字号, 字体
 #import "../utils/custom-heading.typ": heading-content
@@ -59,39 +58,39 @@
 
   {
     set align(center)
-    text(..title-text-args, title)
     // 标记一个不可见的标题用于目录生成
     invisible-heading(level: 1, outlined: outlined, title)
+    text(..title-text-args, title)
+
   }
 
   v(title-vspace)
 
-  show outline.entry: outrageous.show-entry.with(
-    // 保留 Typst 基础样式
-    ..outrageous.presets.typst,
-    body-transform: (level, it) => {
-      // 设置字体和字号
-      set text(
-        font: font.at(calc.min(level, font.len()) - 1),
-        size: size.at(calc.min(level, size.len()) - 1),
-      )
-      // 计算缩进
-      let indent-list = indent + range(level - indent.len()).map((it) => indent.last())
-      let indent-length = indent-list.slice(0, count: level).sum()
-      if "children" in it.fields() and it.children.len() > 2 {
-        set text(weight: weight.at(calc.min(level, weight.len()) - 1))
-        let (number, space, ..text) = it.children
-        [#h(indent-length) #box[#number] #h(if level > 1 {3pt} else {2pt}) #text.join()]
-      } else {
-        set text(weight: weight.at(calc.min(level, weight.len()) - 1))
-        h(indent-length) + it
-      }
-    },
-    vspace: vspace,
-    fill: fill,
-    ..args,
+  let array-at(arr, pos) = {
+    arr.at(calc.min(pos, arr.len()) - 1)
+  }
+
+  show outline.entry.where(level: 1): it => link(
+    it.element.location(),
+    it.indented(
+      if it.prefix() != none and repr(it.prefix()).len() > 2 {
+        text(font: fonts.黑体, size: array-at(size, 0), it.prefix())
+      } else { none },
+      {
+      text(font: fonts.黑体, size: array-at(size, 0), it.body())
+      [ ]
+      box(width: 1fr, it.fill)
+      [ ]
+      it.page()
+    })
   )
 
+  show outline.entry: it => {
+    set block(spacing: array-at(vspace, it.level - 1))
+    // if it.prefix() != none {it.prefix()} else { block(it) }
+    it
+  }
+
   // 显示目录
-  outline(title: none, depth: depth)
+  outline(title: none, depth: depth, indent: auto)
 }

@@ -1,5 +1,7 @@
 // Authors: csimide, OrangeX4
 // Tested only on GB-7714-2015-Numeric
+#import "./style.typ": 字号
+
 #let bilingual-bibliography(
   bibliography: none,
   title: "参考文献",
@@ -9,6 +11,7 @@
   extra-comma-before-et-al-trans: false,
   // 用于控制多位译者时表现为 `et al. tran`(false) 还是 `et al., tran`(true)
   allow-comma-in-name: false,
+  font-size: 字号.小四,
   // 如果使用的 CSL 中，英文姓名中会出现逗号，请设置为 true
 ) = {
   assert(bibliography != none, message: "请传入带有 source 的 bibliography 函数。")
@@ -138,6 +141,8 @@
   set text(lang: "zh")
 
   context state("in-mainmatter").update(false)
+
+  set text(size: font-size)
 
   bibliography(
     title: title,

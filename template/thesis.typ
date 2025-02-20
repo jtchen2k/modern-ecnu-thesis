@@ -1,4 +1,4 @@
-#import "@preview/modern-ecnu-thesis:0.1.0": documentclass, indent, no-indent, word-count-cjk, total-words
+#import "@preview/modern-ecnu-thesis:0.2.0": documentclass, indent, no-indent, word-count-cjk, total-words
 
 // 模板用到的主要字体：https://github.com/jtchen2k/modern-ecnu-thesis/tree/main/fonts/
 // 如果是在 Web App 上编辑，你应该手动上传上述字体文件，否则不能正常使用「楷体」和「仿宋」。

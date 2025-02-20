@@ -98,13 +98,14 @@
     leading: leading,
     justify: justify,
     linebreaks: "optimized",
-    first-line-indent: first-line-indent
+    first-line-indent: (amount: first-line-indent, all: true),
   )
   // show par: set block(spacing: spacing)
   show raw: set text(font: fonts.等宽, size: text-args.size)
   show raw.where(block: true): set par(leading: 1em)
   // 3.2 脚注样式
   show footnote.entry: set text(font: fonts.宋体, size: 字号.五号)
+  show footnote.entry: set par(leading: 1em)
   // 3.3 设置 figure 的编号
   show heading: i-figured.reset-counters
   show figure: show-figure
@@ -167,7 +168,7 @@
       above: array-at(heading-above, it.level),
       below: array-at(heading-below, it.level),
     )
-    it + fake-par + v(-0.15em)
+    it // fake-par + v(-0.15em) // no longer needed since 0.13.0
   }
   // 4.3 标题居中与自动换页
   show heading: it => context {
@@ -239,7 +240,7 @@
 
   // 列表样式
   set enum(indent: 0.9em, body-indent: 0.35em)
-  set list(indent: 2em, body-indent: 0.55em)
+  set list(indent: 1.2em, body-indent: 0.6em)
 
   // 引述文本样式
   set quote(block: true)
@@ -248,10 +249,10 @@
 
   set underline(stroke: 0.5pt + black, offset: 0.35em)
 
-  // 处理其他元素后第一段文本的首行缩进
-  show selector.or(figure, list, enum, quote, terms): it => {
-    it + fake-par
-  }
+  // 处理其他元素后第一段文本的首行缩进 (0.13.0 后不再需要)
+  // show selector.or(figure, list, enum, quote, terms): it => {
+  //   it + fake-par
+  // }
 
   // 处理一级标题的引用格式
   show ref: it => {

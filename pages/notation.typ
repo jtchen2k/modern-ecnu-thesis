@@ -42,10 +42,10 @@
   set text(font: font, size: size)
 
   {
-    set align(center)
-    text(..title-text-args, title)
     // 标记一个不可见的标题用于目录生成
     invisible-heading(level: 1, outlined: outlined, title)
+    set align(center)
+    text(..title-text-args, title)
   }
 
   v(title-vspace)

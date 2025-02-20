@@ -4,7 +4,7 @@
  * @project: modern-ecnu-thesis
  * @author: OrangeX4, Juntong Chen (dev@jtchen.io)
  * @created: 2025-01-06 22:37:34
- * @modified: 2025-01-23 04:45:57
+ * @modified: 2025-02-09 22:02:03
 *
  * 华东师范大学学位论文模板
  *    Repo: https://github.com/jtchen2k/modern-ecnu-thesis
@@ -267,7 +267,7 @@
         bachelor-outline-page(
           twoside: twoside,
           title-text-args: (font: 字体.黑体, size: 字号.三号, weight: "bold"),
-          vspace: (1.35em, 1.2em),
+          vspace: (1.2em,),
           weight: ("regular", "regular"),
           indent: (0em, 2.38em, 2em, 2.8em),
           doctype: doctype,

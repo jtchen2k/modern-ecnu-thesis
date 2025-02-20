@@ -51,28 +51,18 @@
   set text(font: font, size: size)
 
   {
-    set align(center)
-    text(..title-text-args, title)
     // 标记一个不可见的标题用于目录生成
     invisible-heading(level: 1, outlined: outlined, title)
+    set align(center)
+    text(..title-text-args, title)
   }
 
   v(title-vspace)
 
-  show outline.entry: outrageous.show-entry.with(
-    // 保留 Typst 基础样式
-    ..outrageous.presets.typst,
-    body-transform: (level, it) => {
-      // 因为好像没找到 separator 的参数，所以这里就手动寻找替换了
-      if (it.has("children") and it.children.at(3, default: none) == [#": "]) {
-        it.children.slice(0, 3).sum() + separator + it.children.slice(4).sum()
-      } else {
-        it
-      }
-    },
-    vspace: (vspace,),
-    fill: (fill,),
-  )
+  show outline.entry: it => {
+    set block(spacing: vspace)
+    it
+  }
 
   // 显示目录
   i-figured.outline(target-kind: table, title: none)
