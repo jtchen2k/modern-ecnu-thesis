@@ -19,6 +19,7 @@
     twoside: false,
     doctype: "master",
     extra: "华东师范大学本科毕业论文",
+    reset-footnote: true,
     fonts: (:),
     stroke-width: 0.5pt
   ) = {
@@ -36,6 +37,9 @@
       let first-level-heading = hydra(1, skip-starting: false)
       let docinfo = "华东师范大学" + if doctype == "master" { "硕士" } else { "博士" } + "学位论文"
       set text(font: fonts.宋体, size: 字号.五号)
+      if reset-footnote {
+        counter(footnote).update(0)
+      }
       if twoside {
         page = here().position().page
       }

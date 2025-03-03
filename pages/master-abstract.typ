@@ -62,7 +62,7 @@
   [
 
     #set text(font: fonts.楷体, size: 字号.四号)
-    #set par(leading: leading, justify: true)
+    #set par(leading: leading, justify: true, first-line-indent: (amount: 2em, all: true))
 
     // #show par: set block(spacing: spacing)
     #set block(spacing: spacing)
@@ -81,8 +81,7 @@
 
     #set text(font: fonts.宋体, size: 字号.小四)
 
-    #indent #body
-
+    #body
 
     #block[
       #text(font: fonts.黑体, weight: "bold", "关键词：")#(("",) + keywords.intersperse("，")).sum()

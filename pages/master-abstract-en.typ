@@ -58,7 +58,7 @@
   )
 
   [
-    #set par(leading: leading, justify: true)
+    #set par(leading: leading, justify: true, first-line-indent: (amount: 2em, all: true))
 
     // #show par: set block(spacing: spacing)
     #set block(spacing: spacing)
