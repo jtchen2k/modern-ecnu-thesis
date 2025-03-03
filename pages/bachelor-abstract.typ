@@ -64,9 +64,9 @@
     #v(1em)
     #set text(font: fonts.宋体, size: 字号.五号)
 
+    #set par(leading: leading, justify: true, first-line-indent: (amount: 2em, all: true))
+
     #[
-      #set par(first-line-indent: 2em)
-      #fake-par
       #body
     ]
 
