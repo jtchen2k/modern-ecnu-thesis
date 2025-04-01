@@ -18,6 +18,7 @@
     } else if twoside == true {
       let preal = here().position().page
       if calc.rem(preal, 2) == 1 {
+<<<<<<< HEAD
         pagealign = if (centered-page-number) { center } else { right }
       } else {
         pagealign = if (centered-page-number) { center } else { right }
@@ -27,6 +28,17 @@
         pagealign = if (centered-page-number) { center } else { right }
       } else {
         pagealign = if (centered-page-number) { center } else { left }
+=======
+        pagealign = center
+      } else {
+        pagealign = center
+      }
+    } else {
+      if calc.rem(p, 2) == 1 {
+        pagealign = center
+      } else {
+        pagealign = center
+>>>>>>> 204bcc2 (feat: centered page numbers, table font size)
       }
     }
     align(pagealign, counter(page).display("I"))
