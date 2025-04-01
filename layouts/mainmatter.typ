@@ -48,8 +48,13 @@
   show-equation: i-figured.show-equation,
   // heading 文字（本科生论文需要）
   heading-extra: "华东师范大学本科毕业论文",
+<<<<<<< HEAD
   // 图表标题模式：standard 或 bilingual
   caption-mode: "standard",
+=======
+  // 页码居中
+  centered-page-number: false,
+>>>>>>> 3e2106b (feat: centered page numbers, table font size)
   ..args,
   it,
 ) = {
@@ -63,12 +68,10 @@
     set text(size: 字号.五号)
     let p = counter(page).get().at(0)
     let pagealign = center
-    if doctype == "bachelor" {
-      pagealign = center
-    } else if calc.rem(p, 2) == 1 {
-      pagealign = right
+    if calc.rem(p, 2) == 1 {
+      pagealign = if (centered-page-number) { center } else { right }
     } else {
-      pagealign = left
+      pagealign = if (centered-page-number) { center } else { left }
     }
     align(pagealign, counter(page).display())
   })
@@ -155,6 +158,9 @@
     it
   }
   set table(stroke: 0.5pt + black)
+
+  // 表格字体比正文小一号
+  show table: set text(size: 0.95em)
 
   // 4.  处理标题
   // 4.1 设置标题的 Numbering
