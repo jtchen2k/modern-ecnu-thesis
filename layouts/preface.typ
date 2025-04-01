@@ -18,15 +18,15 @@
     } else if twoside == true {
       let preal = here().position().page
       if calc.rem(preal, 2) == 1 {
-        pagealign = right
+        pagealign = center
       } else {
-        pagealign = left
+        pagealign = center
       }
     } else {
       if calc.rem(p, 2) == 1 {
-        pagealign = right
+        pagealign = center
       } else {
-        pagealign = left
+        pagealign = center
       }
     }
     align(pagealign, counter(page).display("I"))
