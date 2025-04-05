@@ -121,13 +121,23 @@
   show figure.caption: set text(size: caption-size, font: fonts.楷体)
   show figure.caption: set par(leading: 1em)
 
+  /*
+   * Uncomment this to show the caption with supplement and numbering
+   */
+  // show figure.caption: c => block(inset: (top: figure-caption-spacing, bottom: figure-caption-spacing))[
+  //   #set align(left)
+  //   #text(font: fonts.宋体, weight: "regular", style: "normal")[
+  //     #c.supplement #context c.counter.display(c.numbering)
+  //     ]
+  //     #h(0.3em)#c.body
+  // ]
+
   show figure.caption: c => block(inset: (top: figure-caption-spacing, bottom: figure-caption-spacing))[
     #set align(left)
-    #text(font: fonts.黑体, weight: "regular", style: "normal")[
-      #c.supplement #context c.counter.display(c.numbering)
-      ]
-      #h(0.3em)#c.body
+    // 只显示caption内容，不显示supplement和numbering
+    #c.body
   ]
+  
   show figure.where(placement: none): it => {
     v(figure-clearance / 6)
     it

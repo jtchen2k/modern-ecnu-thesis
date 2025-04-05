@@ -1,4 +1,5 @@
 #import "@preview/modern-ecnu-thesis:0.2.0": documentclass, indent, no-indent, word-count-cjk, total-words
+#import "../utils/bilingual-figure.typ": *
 
 // 模板用到的主要字体：https://github.com/jtchen2k/modern-ecnu-thesis/tree/main/fonts/
 // 如果是在 Web App 上编辑，你应该手动上传上述字体文件，否则不能正常使用「楷体」和「仿宋」。
@@ -179,6 +180,14 @@
 )[
   #image("images/ecnu-emblem.svg", width: 20%)
 ] <ecnu-logo>
+
+
+#bilingual-figure(
+  image("images/ecnu-emblem.svg", width: 20%),
+  caption: "双语图片标题",
+  caption-en: "Bilingual Figure Caption",
+  manual-number: "1.1" // need manual numbering
+) 
 
 == 数学公式
 
