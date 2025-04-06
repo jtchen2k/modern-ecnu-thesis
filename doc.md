@@ -28,6 +28,37 @@
 )
 ```
 
+### 3. 切换图表标题格式
+
+要在普通图表标题和双语图表标题之间切换，需要修改 `mainmatter.typ` 中的相关代码:
+
+```typst
+// 显示带编号的普通图表标题(默认被注释)
+show figure.caption: c => block(inset: (top: figure-caption-spacing, bottom: figure-caption-spacing))[
+  #set align(left)
+  #text(font: fonts.宋体, weight: "regular", style: "normal")[
+    #c.supplement #context c.counter.display(c.numbering)
+  ]
+  #h(0.3em)#c.body
+]
+
+// 显示不带编号的双语图表标题(默认启用)
+show figure.caption: c => block(inset: (top: figure-caption-spacing, bottom: figure-caption-spacing))[
+  #set align(left)
+  #c.body
+]
+```
+
+使用普通图表标题时:
+1. 注释掉双语图表标题的代码块
+2. 取消注释普通图表标题的代码块
+
+使用双语图表标题时:
+1. 注释掉普通图表标题的代码块
+2. 取消注释双语图表标题的代码块
+
+注意：两种格式不要同时启用,否则会导致图表编号混乱。
+
 ### ⚠️ 注意事项
 
 1. 两种格式不能混用，否则会导致图片编号出现问题
