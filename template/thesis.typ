@@ -184,10 +184,29 @@
 
 #bilingual-figure(
   image("images/ecnu-emblem.svg", width: 20%),
+  kind: "figure",
+  caption-position: bottom,
   caption: "双语图片标题",
   caption-en: "Bilingual Figure Caption",
   manual-number: "1.1" // need manual numbering
 ) 
+
+#bilingual-figure(
+  table(
+    columns: 4,
+    stroke: none,
+    table.hline(),
+    [t], [1], [2], [3],
+    table.hline(stroke: .5pt),
+    [y], [0.3s], [0.4s], [0.8s],
+    table.hline(),
+  ),
+  kind: "table",
+  caption-position: top,
+  caption: "双语表标题",
+  caption-en: "Bilingual Table Caption",
+  manual-number: "1.1" 
+)
 
 == 数学公式
 

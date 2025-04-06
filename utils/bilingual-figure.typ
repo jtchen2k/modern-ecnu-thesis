@@ -7,9 +7,10 @@
   caption-en: none,
   kind: "figure",
   supplement: auto,
-  numbering: "1.1",
-  gap: 0.65em,
-  manual-number: none,
+  numbering: "1.1",  // 使用章节-序号格式
+  gap: 0.65em,       // 图片与标题间距
+  caption-position: bottom, // 标题位置
+  manual-number: none, // 手动指定编号
 ) = context {
   let sup = if supplement == auto {
     if kind == "figure" { "图" }
@@ -23,15 +24,18 @@
     else { kind }
   } else { supplement }
   
+  // 创建显示编号的函数
   let display-number = if manual-number != none {
     manual-number
   } else {
     counter(kind).display(numbering)
   }
+
+  set figure.caption(position: caption-position)
   
   figure(
     body,
-    caption: if caption != none {
+    caption: if caption != none{
       [
         #set text(font: 字体.宋体, size: 字号.小四, weight: "regular")
         #set align(center)
@@ -48,7 +52,7 @@
     },
     kind: kind,
     gap: gap,
-    supplement: "", 
+    supplement: "",  // 设置为空字符串，因为我们已在caption中手动处理
     numbering: none,
   )
 }
