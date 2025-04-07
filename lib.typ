@@ -38,6 +38,7 @@
 #import "utils/indent.typ": indent, fake-par, no-indent
 #import "utils/panic-page.typ": panic-page
 #import "utils/word-counter.typ": *
+#import "pages/bachelor-academic-integrity.typ": bachelor-academic-integrity
 #import "@preview/i-figured:0.2.4": show-figure, show-equation
 #import "utils/style.typ": 字体, 字号
 
@@ -183,6 +184,20 @@
         panic("postdoc has not yet been implemented.")
       } else if doctype == "bachelor" {
         panic-page("declaration page has not yet been implemented for bachelors.")
+      }
+    },
+    // 诚信承诺页，通过 type 分发到不同函数
+    academic-integrity: (..args) => {
+      if doctype == "master" or doctype == "doctor" {
+        // PLACEHOLDER
+      } else if doctype == "bachelor" {
+        bachelor-academic-integrity(
+          twoside: twoside,
+          ..args,
+          fonts: fonts + args.named().at("fonts", default: (:)),
+          info: info + args.named().at("info", default: (:)),
+          anonymous: anonymous,
+        )
       }
     },
     committee: (..args) => {

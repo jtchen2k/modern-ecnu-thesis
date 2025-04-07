@@ -144,6 +144,57 @@ context state("total-characters").final()
 - **研究生**
   - 暂无
 
+## 特性说明
+
+### 双语图片标题
+
+本模板支持两种图片标题格式：普通图片标题和双语图片标题。
+
+#### 1. 普通图片标题
+
+使用 Typst 原生的 `figure` 语法:
+
+```typst
+#figure(
+  placement: top,  // 控制图片位置
+  caption: [图片标题],
+)[
+  #image("path/to/image.png", width: 80%)
+] <fig:label>
+```
+
+#### 2. 双语图片标题
+
+使用模板提供的 `bilingual-figure` 函数:
+
+```typst
+#bilingual-figure(
+  image("path/to/image.png", width: 80%),
+  caption: "中文标题",
+  caption-en: "English Caption",
+  kind: "figure",  // 可选："figure"或"table"
+  caption-position: bottom,  // 可选：top或bottom
+  manual-number: "1.1"  // 需要手动指定编号
+)
+```
+
+#### 3. 切换图表标题格式
+
+要在普通图表标题和双语图表标题之间切换，只需修改 `mainmatter` 参数:
+
+```typst
+// 使用普通图表标题
+#show: mainmatter.with(caption-mode: "standard")
+
+// 使用双语图表标题
+#show: mainmatter.with(caption-mode: "bilingual")
+```
+
+**注意事项：**
+- 两种格式不能混用，否则会导致图片编号出现问题
+- 使用双语图片标题时，需要手动维护 `manual-number` 参数以确保编号的正确性
+- 目前双语图片标题不支持引用功能
+
 ## Changelog
 
 ### 0.2.0 (2025.2.19)

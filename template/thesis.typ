@@ -1,4 +1,5 @@
 #import "@preview/modern-ecnu-thesis:0.2.0": documentclass, indent, no-indent, word-count-cjk, total-words
+#import "../utils/bilingual-figure.typ": *
 
 // 模板用到的主要字体：https://github.com/jtchen2k/modern-ecnu-thesis/tree/main/fonts/
 // 如果是在 Web App 上编辑，你应该手动上传上述字体文件，否则不能正常使用「楷体」和「仿宋」。
@@ -10,6 +11,7 @@
   // 页面函数
   fonts-display-page, cover, decl-page, committee, abstract, abstract-en, bilingual-bibliography,
   outline-page, list-of-figures, list-of-tables, notation, acknowledgement,
+  academic-integrity,
 ) = documentclass(
   // doctype: "bachelor",  // "bachelor" | "master" | "doctor", 文档类型，默认为硕士生 master
   doctype: "master",
@@ -75,6 +77,9 @@
 // 前言
 #show: preface
 
+// 学位论文原创性声明
+#academic-integrity()
+
 // 中文摘要
 #abstract(
   keywords: ("天行健", "君子以", "自强", "不息")
@@ -107,7 +112,9 @@
 
 // 正文
 // 可选的，可以通过 #show: mainmatter.with(figure-clearance: 0pt) 来设置浮动图表的间距或其他参数
-#show: mainmatter
+#show: mainmatter.with(
+  caption-mode: "standard", // caption 模式，standard 或 bilingual
+)
 
 // 字数统计开始
 #show: word-count-cjk
@@ -141,6 +148,8 @@
 
 == 图表
 
+== 常规图表
+
 引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:ecnu-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
 
 #figure(
@@ -172,13 +181,41 @@
   需要 Typst 版本 >= 0.12.0：#link("https://github.com/typst/typst/releases/tag/v0.12.0")。
 ] 来设置类似的浮动图表位置。可用的值有 `top`、`bottom` 与 `none`，分别对应 LaTeX 中的 t、b 与 h。若要实现类似 LaTeX 中 `p` 属性的整页图表，可结合 `pagebreak()` 函数与图片上下的 `h(1fr)` 来实现。
 
-
 #figure(
   placement: top, // 顶部浮动
   caption: [顶部浮动图片。A floating figure at the top.],
 )[
   #image("images/ecnu-emblem.svg", width: 20%)
 ] <ecnu-logo>
+
+== 中英双语图表
+#no-indent
+本模板支持中英双语的图表标题功能。双语图表的详细使用说明请参见文档 `doc.md`。以下展示几个基本示例:
+#bilingual-figure(
+  image("images/ecnu-emblem.svg", width: 20%),
+  kind: "figure",
+  caption-position: bottom,
+  caption: "双语图片标题",
+  caption-en: "Bilingual Figure Caption",
+  manual-number: "1.1" // need manual numbering
+) 
+
+#bilingual-figure(
+  table(
+    columns: 4,
+    stroke: none,
+    table.hline(),
+    [t], [1], [2], [3],
+    table.hline(stroke: .5pt),
+    [y], [0.3s], [0.4s], [0.8s],
+    table.hline(),
+  ),
+  kind: "table",
+  caption-position: top,
+  caption: "双语表标题",
+  caption-en: "Bilingual Table Caption",
+  manual-number: "1.1" 
+)
 
 == 数学公式
 
@@ -318,7 +355,7 @@ _感谢以下模板提供的参考：_
 #set enum(numbering: "[1]")
 #set par(justify: false)
 
-+ J. von Neumann, “First draft of a report on the EDVAC,” IEEE Annals of the History of Computing, vol. 15, no. 4, pp. 27–75, 1993, doi: 10.1109/85.238389.
-+ A. M. Turing, “On Computable Numbers, with an Application to the Entscheidungsproblem,” Proceedings of the London Mathematical Society, vol. s2-42, no. 1, pp. 230–265, 1937, doi: 10.1112/plms/s2-42.1.230.
++ J. von Neumann, "First draft of a report on the EDVAC," IEEE Annals of the History of Computing, vol. 15, no. 4, pp. 27–75, 1993, doi: 10.1109/85.238389.
++ A. M. Turing, "On Computable Numbers, with an Application to the Entscheidungsproblem," Proceedings of the London Mathematical Society, vol. s2-42, no. 1, pp. 230–265, 1937, doi: 10.1112/plms/s2-42.1.230.
 ]
 
