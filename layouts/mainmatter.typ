@@ -48,13 +48,10 @@
   show-equation: i-figured.show-equation,
   // heading 文字（本科生论文需要）
   heading-extra: "华东师范大学本科毕业论文",
-<<<<<<< HEAD
   // 图表标题模式：standard 或 bilingual
   caption-mode: "standard",
-=======
   // 页码居中
   centered-page-number: false,
->>>>>>> 3e2106b (feat: centered page numbers, table font size)
   ..args,
   it,
 ) = {
@@ -138,7 +135,7 @@
       c.body
     }
   ]
-  
+
   show figure.where(placement: none): it => {
     v(figure-clearance / 6)
     it
