@@ -11,6 +11,7 @@
   // 页面函数
   fonts-display-page, cover, decl-page, committee, abstract, abstract-en, bilingual-bibliography,
   outline-page, list-of-figures, list-of-tables, notation, acknowledgement,
+  academic-integrity,
 ) = documentclass(
   // doctype: "bachelor",  // "bachelor" | "master" | "doctor", 文档类型，默认为硕士生 master
   doctype: "master",
@@ -76,6 +77,9 @@
 // 前言
 #show: preface
 
+// 学位论文原创性声明
+#academic-integrity()
+
 // 中文摘要
 #abstract(
   keywords: ("天行健", "君子以", "自强", "不息")
@@ -108,7 +112,9 @@
 
 // 正文
 // 可选的，可以通过 #show: mainmatter.with(figure-clearance: 0pt) 来设置浮动图表的间距或其他参数
-#show: mainmatter
+#show: mainmatter.with(
+  caption-mode: "standard", // caption 模式，standard 或 bilingual
+)
 
 // 字数统计开始
 #show: word-count-cjk
@@ -142,7 +148,7 @@
 
 == 图表
 
-== 常规图标
+== 常规图表
 
 引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:ecnu-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
 
@@ -349,7 +355,7 @@ _感谢以下模板提供的参考：_
 #set enum(numbering: "[1]")
 #set par(justify: false)
 
-+ J. von Neumann, “First draft of a report on the EDVAC,” IEEE Annals of the History of Computing, vol. 15, no. 4, pp. 27–75, 1993, doi: 10.1109/85.238389.
-+ A. M. Turing, “On Computable Numbers, with an Application to the Entscheidungsproblem,” Proceedings of the London Mathematical Society, vol. s2-42, no. 1, pp. 230–265, 1937, doi: 10.1112/plms/s2-42.1.230.
++ J. von Neumann, "First draft of a report on the EDVAC," IEEE Annals of the History of Computing, vol. 15, no. 4, pp. 27–75, 1993, doi: 10.1109/85.238389.
++ A. M. Turing, "On Computable Numbers, with an Application to the Entscheidungsproblem," Proceedings of the London Mathematical Society, vol. s2-42, no. 1, pp. 230–265, 1937, doi: 10.1112/plms/s2-42.1.230.
 ]
 

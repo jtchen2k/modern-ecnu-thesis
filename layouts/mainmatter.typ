@@ -48,6 +48,8 @@
   show-equation: i-figured.show-equation,
   // heading 文字（本科生论文需要）
   heading-extra: "华东师范大学本科毕业论文",
+  // 图表标题模式：standard 或 bilingual
+  caption-mode: "standard",
   ..args,
   it,
 ) = {
@@ -121,21 +123,17 @@
   show figure.caption: set text(size: caption-size, font: fonts.楷体)
   show figure.caption: set par(leading: 1em)
 
-  /*
-   * Uncomment this to show the caption with supplement and numbering
-   */
-  // show figure.caption: c => block(inset: (top: figure-caption-spacing, bottom: figure-caption-spacing))[
-  //   #set align(left)
-  //   #text(font: fonts.宋体, weight: "regular", style: "normal")[
-  //     #c.supplement #context c.counter.display(c.numbering)
-  //     ]
-  //     #h(0.3em)#c.body
-  // ]
-
   show figure.caption: c => block(inset: (top: figure-caption-spacing, bottom: figure-caption-spacing))[
     #set align(left)
-    // 只显示caption内容，不显示supplement和numbering
-    #c.body
+    #if caption-mode == "standard" {
+      text(font: fonts.宋体, weight: "regular", style: "normal")[
+      #c.supplement #context c.counter.display(c.numbering)
+      ]
+      h(0.3em)
+      c.body
+    } else if caption-mode == "bilingual" {
+      c.body
+    }
   ]
   
   show figure.where(placement: none): it => {
