@@ -50,7 +50,6 @@
   仿宋: ("Times New Roman", "FangSong", "FangSong SC", "STFangSong", "FZFangSong-Z02S", "Noto Serif CJK SC"),
   // 等宽字体，用于代码块环境，一般可以等同于英文中的 Monospaced Font
   等宽: ("Inconsolata", "Courier New", "Menlo", "IBM Plex Mono", "Source Han Sans HW SC", "Source Han Sans HW", "Noto Sans Mono CJK SC", "SimHei", "Heiti SC", "STHeiti"),
-  NotoSerif: ("Source Han Serif"),
 )
 
 #let fonts = (
@@ -59,5 +58,4 @@
   kai: 字体.楷体,
   fang: 字体.仿宋,
   mono: 字体.等宽,
-  noto: 字体.NotoSerif,
 )
