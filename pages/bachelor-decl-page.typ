@@ -16,7 +16,7 @@
 
    v(12pt)
 
-  align(center, text(font: fonts.宋体, size: 字号.四号, weight: "bold", "华东师范大学学位论文原创性声明"))
+  align(center, text(font: fonts.宋体, size: 字号.四号, weight: "bold", "华东师范大学学位论文诚信承诺"))
 
   // v(12pt)
 
@@ -25,6 +25,7 @@
     #set par(justify: true, first-line-indent: 2em, leading: 1em)
 
     #indent 本毕业论文是本人在导师指导下独立完成的，内容真实、可靠。本人在撰写毕业论文过程中不存在请人代写、抄袭或者剽窃他人作品、伪造或者篡改数据以及其他学位论文作假行为。
+    
     本人清楚知道学位论文作假行为将会导致行为人受到不授予/撤销学位、开除学籍等处理（处分）决定。本人如果被查证在撰写本毕业论文过程中存在学位论文作假行为，愿意接受学校依法作出的处理（处分）决定。
 
 
