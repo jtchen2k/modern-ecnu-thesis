@@ -12,18 +12,19 @@
   caption-position: bottom, // 标题位置
   manual-number: none, // 手动指定编号
 ) = context {
+  show figure.caption: c => c.body
   let sup = if supplement == auto {
     if kind == "figure" { "图" }
     else if kind == "table" { "表" }
     else { kind }
   } else { supplement }
-  
+
   let sup-en = if supplement == auto {
     if kind == "figure" { "Figure" }
     else if kind == "table" { "Table" }
     else { kind }
   } else { supplement }
-  
+
   // 创建显示编号的函数
   let display-number = if manual-number != none {
     manual-number
@@ -32,15 +33,15 @@
   }
 
   set figure.caption(position: caption-position)
-  
+
   figure(
     body,
-    caption: if caption != none{
+    caption: if caption != none {
       [
         #set text(font: 字体.宋体, size: 字号.小四, weight: "regular")
         #set align(center)
         #sup #display-number #caption
-        
+
         #if caption-en != none {
           [
             #set text(font: 字体.宋体, size: 字号.五号, weight: "regular")
@@ -49,7 +50,7 @@
           ]
         }
       ]
-    },
+    } else [],
     kind: kind,
     gap: gap,
     supplement: "",  // 设置为空字符串，因为我们已在caption中手动处理

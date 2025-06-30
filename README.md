@@ -139,7 +139,8 @@ context state("total-characters").final()
 因个人精力有限，以下功能暂未完成，欢迎有兴趣的同学贡献代码：）
 
 - **本科**
-  - [ ] 中英双语图片标题
+  - [x] 中英双语图片标题（[@ruoyiqiao](https://github.com/ruoyiqiao)）
+  - [ ] 中英双语图标自动编号
   - [ ] 本科学位论文的诚信承诺页
 - **研究生**
   - 暂无
@@ -180,7 +181,7 @@ context state("total-characters").final()
 
 #### 3. 切换图表标题格式
 
-要在普通图表标题和双语图表标题之间切换，只需修改 `mainmatter` 参数:
+要在普通图表标题和双语图表标题之间切换，需修改 `mainmatter` 参数:
 
 ```typst
 // 使用普通图表标题
@@ -191,11 +192,20 @@ context state("total-characters").final()
 ```
 
 **注意事项：**
-- 两种格式不能混用，否则会导致图片编号出现问题
+
+- **两种格式不能混用，否则会导致图片编号出现问题**
 - 使用双语图片标题时，需要手动维护 `manual-number` 参数以确保编号的正确性
 - 目前双语图片标题不支持引用功能
 
 ## Changelog
+
+### 0.3.0 (2025.6.30)
+
+- feat: 支持中英双语图片标题（[@ruoyiqiao](https://github.com/ruoyiqiao)）
+- fix: 修复摘要页面的页码错误
+- fix: 修复摘要首行缩进的问题
+- fix: 修复页脚编号错误的问题
+- fix: 调整表格字体大小使其略小于正文
 
 ### 0.2.0 (2025.2.19)
 
