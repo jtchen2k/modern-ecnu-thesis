@@ -70,8 +70,7 @@
     #set text(font: fonts.宋体, size: 字号.五号)
 
     #[
-      #set par(first-line-indent: 2em)
-      #fake-par
+      #set par(first-line-indent: (amount: 2em, all: true))
       #body
     ]
 

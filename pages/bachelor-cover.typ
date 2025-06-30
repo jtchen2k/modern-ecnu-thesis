@@ -121,7 +121,13 @@
     #set text(font: fonts.宋体, size: 字号.小四, weight: "bold")
     #info.grade 届本科生学士学位论文
     #h(1fr)
-    学校代码：#underline(stroke: 0.5pt, offset: 3pt)[*10269*]
+    学校代码：#underline(stroke: 0.5pt, offset: 3pt)[
+      #if anonymous {
+        10269
+      } else {
+        10269
+      }
+    ]
   ]
 
   v(5pt)

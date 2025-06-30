@@ -32,6 +32,7 @@
   anonymous-info-keys: (
     "student-id",
     "author",
+    "school-code",
     "author-en",
     "supervisor",
     "supervisor-en",
@@ -271,7 +272,7 @@
     row-gutter: 1.5em,
     column-gutter: 0em,
     [University Code:],
-    [#h(1fr)10269],
+    [#h(1fr)#anonymous-text("school-code", short: true, info.school-code)],
     [Student ID:],
     [#h(1fr)#anonymous-text("student-id", short: true, info.student-id)],
   )
