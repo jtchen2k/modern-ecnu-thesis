@@ -95,7 +95,7 @@ ln -s </path/to/modern-ecnu-thesis> $DATA_DIR/typst/packages/preview/modern-ecnu
 
 ### 字数统计
 
-模板内置了字数统计功能。统计时会除去标题与标点符号，默认包括了正文与附录的所有内容。一个英语单词或一个 CJK 汉字将会被统计为一个 word，一个任意字符会被统计为一个 char。默认的统计范围为正文 + 附录，这取决于文中 `#show: word-count-cjk` 的位置。如果希望包括摘要、目录等能容，将这一行移动到 `#show: preface` 的下一行即可。
+模板内置了字数统计功能。统计时会除去标题与标点符号，默认包括了正文与附录的所有内容。一个英语单词或一个 CJK 字符将会被统计为一个 word，一个任意字符会被统计为一个 char。默认的统计范围为正文 + 附录，这取决于文中 `#show: word-count-cjk` 的位置。如果希望包括摘要、目录等内容，将这一行移动到 `#show: preface` 的下一行即可。
 
 如需统计字数，可以使用 `make count` 命令，你会得到类似如下的输出：
 
@@ -142,7 +142,7 @@ context state("total-characters").final()
   - [x] 中英双语图片标题（[@ruoyiqiao](https://github.com/ruoyiqiao)）
   - [x] 本科学位论文的诚信承诺页（[@ruoyiqiao](https://github.com/ruoyiqiao), [@SeeYouCowboi](https://github.com/SeeYouCowboi)）
   - [ ] 本科学位论文学术委员会页面
-  - [ ] 中英双语图标自动编号
+  - [ ] 中英双语图表自动编号
 - **研究生**
   - 暂无
 
