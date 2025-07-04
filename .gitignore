@@ -2,3 +2,4 @@ template/*.pdf
 package.json
 Makefile
 .DS_Store
+.vs

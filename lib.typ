@@ -187,7 +187,14 @@
       } else if doctype == "postdoc" {
         panic("postdoc has not yet been implemented.")
       } else if doctype == "bachelor" {
-        panic-page("declaration page has not yet been implemented for bachelors.")
+        // panic-page("declaration page has not yet been implemented for bachelors.")
+        bachelor-decl-page(
+          anonymous: anonymous,
+          twoside: twoside,
+          ..args,
+          fonts: fonts + args.named().at("fonts", default: (:)),
+          info: info + args.named().at("info", default: (:)),
+        )
       }
     },
     // 诚信承诺页，通过 type 分发到不同函数

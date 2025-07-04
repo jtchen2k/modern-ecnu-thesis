@@ -41,7 +41,7 @@
 
 #let 字体 = (
   // 宋体，属于「有衬线字体」，一般可以等同于英文中的 Serif Font
-  宋体: ("Times New Roman", "Songti SC", "STSongti", "Source Han Serif CN", "Source Han Serif", "Noto Serif CJK SC", "SimSun"),
+  宋体: ("Times New Roman", "Source Han Serif", "Source Han Serif CN","Songti SC", "STSongti",  "Noto Serif CJK SC", "SimSun"),
   // 黑体，属于「无衬线字体」，一般可以等同于英文中的 Sans Serif Font
   黑体: ("Helvetica", "Arial", "Heiti SC", "STHeiti", "SimHei", "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC"),
   // 楷体
