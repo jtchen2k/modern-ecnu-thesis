@@ -27,6 +27,7 @@
 #import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
 #import "pages/master-abstract-en.typ": master-abstract-en
 #import "pages/bachelor-outline-page.typ": bachelor-outline-page
+#import "pages/master-outline-page.typ": master-outline-page
 #import "pages/list-of-figures.typ": list-of-figures
 #import "pages/list-of-tables.typ": list-of-tables
 #import "pages/notation.typ": notation
@@ -288,13 +289,8 @@
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
-        bachelor-outline-page(
+        master-outline-page(
           twoside: twoside,
-          title-text-args: (font: 字体.黑体, size: 字号.三号, weight: "bold"),
-          vspace: (1.2em,),
-          weight: ("regular", "regular"),
-          indent: (0em, 2.38em, 2em, 2.8em),
-          doctype: doctype,
           show-heading: true,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
