@@ -5,7 +5,7 @@ TARGET_TYP = thesis.typ
 TYPST_FLAGS = --pdf-standard 1.7 --root ..
 
 $(TARGET): $(TYP_SRC)
-	typst compile $(TYPST_FLAGS) (TARGET_TYP)
+	typst compile $(TYPST_FLAGS) $(TARGET_TYP)
 	@echo "Build successful: $(shell du -h $(TARGET_TYP) | cut -f1)"
 
 .PHONY: clean, watch, count

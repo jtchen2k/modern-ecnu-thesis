@@ -9,7 +9,7 @@
   ..args,
   it,
 ) = {
-  set page(footer: context {
+  set page(numbering: "I", footer: context {
     set text(size: 字号.五号)
     let p = counter(page).get().at(0)
     let pagealign = center

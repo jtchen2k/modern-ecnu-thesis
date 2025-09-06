@@ -112,6 +112,9 @@
   caption-mode: "standard", // caption 模式，standard 或 bilingual
 )
 
+// 无序列表的标记符号统一为实心圆点
+#set list(marker: [•])
+
 // 字数统计开始
 #show: word-count-cjk
 
